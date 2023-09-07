@@ -1,10 +1,13 @@
+import { getBaseUrlFromCurrentPage } from "./getUrl.js";
+
 const add_qty = document.getElementById("add_quantity");
 const qty_cat_weight = document.getElementById("qty-cat-weight-number");
 const qty_cat_unit = document.getElementById("qty-cat-weight-unit");
 const qty_cat_rs = document.getElementById("qty-cat-price");
 
+const baseUrl = getBaseUrlFromCurrentPage();
 // URL for temporary data retrieval and management
-const tempQtyServletUrl = "http://localhost:8080/agrokart-web/TemporaryDataServlet";
+const tempQtyServletUrl = baseUrl + "agrokart-web/TemporaryDataServlet";
 
 // Attach a function to the window's onload event, which will execute when the page is fully loaded
 window.onload = deleteAllqty;
@@ -206,4 +209,4 @@ function deletepricelist(index) {
 		});
 }
 
-export { deletepricelist, getAllQutyCate, deleteAllqty, tempQtyServletUrl,setTempQty };
+export { deletepricelist, getAllQutyCate, deleteAllqty, tempQtyServletUrl, setTempQty };

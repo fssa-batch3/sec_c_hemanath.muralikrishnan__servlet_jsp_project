@@ -22,7 +22,7 @@ import com.fssa.agrokart.util.Logger;
  */
 @WebServlet("/ReadAllProductServlet")
 public class ReadAllProductServlet extends HttpServlet {
-	
+
 	private static final long serialVersionUID = 858279837616370892L;
 	ProductService service = new ProductService();
 
@@ -40,9 +40,6 @@ public class ReadAllProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// Create a PrintWriter to write the response content
-		PrintWriter out = response.getWriter();
-
 		try {
 			// Retrieve a list of all products using the ProductService
 			List<Product> listOfProducts = service.readAllProducts();
@@ -50,7 +47,7 @@ public class ReadAllProductServlet extends HttpServlet {
 			// Convert the list of products to a JSON array
 			JSONArray jsonArray = new JSONArray(listOfProducts);
 
-			// Write the JSON array as the response content
+			// Write the JSON array as the response content)
 			response.getWriter().write(jsonArray.toString());
 
 		} catch (ServiceException e) {

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,6 +21,9 @@
 <!-- body css -->
 
 <link rel="stylesheet"
+	href="<%=request.getContextPath()%>/assets/css/loading.css">
+
+<link rel="stylesheet"
 	href="<%=request.getContextPath()%>/assets/css/body.css">
 
 <link rel="stylesheet"
@@ -38,10 +41,14 @@
 <script
 	src="https://cdn.jsdelivr.net/gh/suryaumapathy2812/notify__js/notify.js"></script>
 
-<title>Agrokart - List Products</title>
+<link rel="icon" type="image/png" sizes="32x32"
+	href="https://freeimghost.net/images/2023/09/06/icon.png">
+
+<title>AgroKart - Product CRUD</title>
 </head>
 <body>
 
+	<jsp:include page="loading.jsp"></jsp:include>
 
 	<div class="list-create-products">
 
@@ -55,7 +62,7 @@
 
 		<table>
 
-			<caption>Products that are created</caption>
+			<caption>created products listing</caption>
 
 			<thead>
 				<th>S.No</th>
@@ -94,8 +101,12 @@
 		crossorigin="anonymous"></script>
 
 	<script defer type="module"
+		src="<%=request.getContextPath()%>/assets/js/loading.js"></script>
+	<script defer type="module"
 		src="<%=request.getContextPath()%>/assets/js/temp-quantity.js"></script>
 	<script defer type="module"
 		src="<%=request.getContextPath()%>/assets/js/list-product.js"></script>
+	<script defer type="module"
+		src="<%=request.getContextPath()%>/assets/js/getUrl.js"></script>
 </body>
 </html>

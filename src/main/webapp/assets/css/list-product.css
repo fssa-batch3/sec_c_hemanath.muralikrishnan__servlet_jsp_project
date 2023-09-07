@@ -35,11 +35,9 @@
 table {
 	margin: 2em auto;
 	text-align: center;
+	width: 100%;
 }
 
-table caption {
-	display: none;
-}
 
 table th {
 	cursor: pointer;
@@ -52,6 +50,37 @@ td {
 	background-color: white;
 	border-collapse: collapse;
 	padding: 1em;
+}
+
+
+table tbody {
+
+	width: 80%;
+	max-height: calc(89% - 1.6rem);
+	background-color: white;
+	margin: 2em auto;
+	border-radius: .6rem;
+	overflow: auto;
+	overflow: overlay;
+}
+
+tbody::-webkit-scrollbar {
+	width: 0.5rem;
+	height: 0.5rem;
+}
+
+tbody::-webkit-scrollbar-thumb {
+	border-radius: .5rem;
+	background-color: #0004;
+	visibility: hidden;
+}
+
+tbody::-webkit-scrollbar-thumb {
+	visibility: visible;
+}
+
+table {
+	width: 100%;
 }
 
 table tbody .success {

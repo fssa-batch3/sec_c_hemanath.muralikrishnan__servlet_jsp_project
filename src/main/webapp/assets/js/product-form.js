@@ -1,5 +1,6 @@
 import { deleteAllqty, tempQtyServletUrl } from "./temp-quantity.js";
 import { product_id, all_elements, getAllProducts } from "./list-product.js";
+import { getBaseUrlFromCurrentPage } from "./getUrl.js";
 
 // Get references to various form elements by their IDs
 const product_form = document.getElementById("product-form");         // Get the form element
@@ -19,8 +20,11 @@ const quantity_price_div = document.querySelector(".qty_cat_div");
 
 const form_sumbit = document.getElementById("form-submit");
 
-const addServletUrl = "http://localhost:8080/agrokart-web/AddProductAjaxServlet";    // URL for adding a product
-const updateServletUrl = "http://localhost:8080/agrokart-web/UpdateproductServlet";  // URL for updating a product
+
+const baseUrl = getBaseUrlFromCurrentPage();
+
+const addServletUrl = baseUrl + "agrokart-web/AddProductAjaxServlet";    // URL for adding a product
+const updateServletUrl = baseUrl + "agrokart-web/UpdateproductServlet";  // URL for updating a product
 
 
 // Function to get form input values

@@ -28,38 +28,40 @@
 								<div class="form-check me-4">
 									<input class="form-check-input" type="radio"
 										name="product-category" id="exotic-fruits"
-										value="EXOTIC_FRUITS"> <label class="form-check-label"
-										for="exotic-fruits">Exotic Fruits</label>
+										value="EXOTIC_FRUITS" required> <label
+										class="form-check-label" for="exotic-fruits">Exotic
+										Fruits</label>
 								</div>
 								<div class="form-check me-4">
 									<input class="form-check-input" type="radio"
 										name="product-category" id="exotic-veggies"
-										value="EXOTIC_VEGGIES"> <label
+										value="EXOTIC_VEGGIES" required> <label
 										class="form-check-label" for="exotic-veggies">Exotic
 										Veggies</label>
 								</div>
 								<div class="form-check me-4">
 									<input class="form-check-input" type="radio"
-										name="product-category" id="fresh-fruits" value="FRESH_FRUITS">
-									<label class="form-check-label" for="fresh-fruits">Fresh
-										Fruits</label>
+										name="product-category" id="fresh-fruits" value="FRESH_FRUITS"
+										required> <label class="form-check-label"
+										for="fresh-fruits">Fresh Fruits</label>
 								</div>
 								<div class="form-check me-4">
 									<input class="form-check-input" type="radio"
 										name="product-category" id="fresh-veggies"
-										value="FRESH_VEGGIES"> <label class="form-check-label"
-										for="fresh-veggies">Fresh Veggies</label>
+										value="FRESH_VEGGIES" required> <label
+										class="form-check-label" for="fresh-veggies">Fresh
+										Veggies</label>
 								</div>
 								<div class="form-check me-4">
 									<input class="form-check-input" type="radio"
-										name="product-category" id="leafy-green" value="LEAFY_GREEN">
-									<label class="form-check-label" for="leafy-green">Leafy
-										Green</label>
+										name="product-category" id="leafy-green" value="LEAFY_GREEN"
+										required> <label class="form-check-label"
+										for="leafy-green">Leafy Green</label>
 								</div>
 								<div class="form-check me-4">
 									<input class="form-check-input" type="radio"
-										name="product-category" id="tubers" value="TUBERS"> <label
-										class="form-check-label" for="tubers">Tubers</label>
+										name="product-category" id="tubers" value="TUBERS" required>
+									<label class="form-check-label" for="tubers">Tubers</label>
 								</div>
 							</div>
 						</div>
@@ -76,21 +78,21 @@
 								<span class="input-group-text">Protein</span> <input type="text"
 									id="product-protein" class="form-control"
 									placeholder="Enter product protein value" required
-									minlength="1" maxlength="2"> <span
+									minlength="1" maxlength="4"> <span
 									class="input-group-text">gm</span>
 							</div>
 							<div class="input-group mb-2">
 								<span class="input-group-text">Carbohydrates</span> <input
 									type="text" id="product-carbo" class="form-control"
 									placeholder="Enter product carbohydrates value" required
-									minlength="1" maxlength="2"> <span
+									minlength="1" maxlength="4"> <span
 									class="input-group-text">gm</span>
 							</div>
 							<div class="input-group">
 								<span class="input-group-text">Calories</span> <input
 									type="text" id="product-kcal" class="form-control"
 									placeholder="Enter product calories values" required
-									minlength="1" maxlength="3"> <span
+									minlength="1" maxlength="4"> <span
 									class="input-group-text">kcal</span>
 							</div>
 						</div>
@@ -154,17 +156,15 @@
 						</div>
 
 						<div class="quantity-price-list">
-							<div class="row">
-								
-							</div>
+							<div class="row"></div>
 						</div>
 
 
 					</div>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-success d-block mx-auto" id="form-submit">Save
-				Product</button>
+			<button type="submit" class="btn btn-success d-block mx-auto"
+				id="form-submit">Save Product</button>
 		</form>
 	</div>
 </div>

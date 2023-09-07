@@ -6,6 +6,12 @@ import {
 
 import { deleteAllqty, getAllQutyCate, setTempQty } from "./temp-quantity.js";
 
+import { getBaseUrlFromCurrentPage } from "./getUrl.js"
+import { startSpinner, endSpinner } from "./loading.js";
+
+
+const baseUrl = getBaseUrlFromCurrentPage();
+
 const create_product = document.getElementById("create-product");
 
 const table_body = document.querySelector(".table_body");
@@ -16,10 +22,10 @@ const all_elements = document.querySelector(".edit-product-all");
 // close the form
 const close_icon = document.getElementById("close_form");
 
-const deleteServletUrl = "http://localhost:8080/agrokart-web/DeleteAjaxProductServlet";
-const reaAllServletUrl = "http://localhost:8080/agrokart-web/ReadAllProductServlet";
-const updateStatusServletUrl = "http://localhost:8080/agrokart-web/UpdatestatusServlet";
-const readSingleProductServletUrl = "http://localhost:8080/agrokart-web/ReadProductById";
+const deleteServletUrl = baseUrl + "agrokart-web/DeleteAjaxProductServlet";
+const reaAllServletUrl = baseUrl + "agrokart-web/ReadAllProductServlet";
+const updateStatusServletUrl = baseUrl + "agrokart-web/UpdatestatusServlet";
+const readSingleProductServletUrl = baseUrl + "agrokart-web/ReadProductById";
 
 
 let product_id = 0;
@@ -174,8 +180,10 @@ product_form.addEventListener("submit", e => {
 
 
 function getAllProducts() {
+	startSpinner();
 	axios.get(reaAllServletUrl)
 		.then(function(response) {
+			endSpinner();
 			const serverMsg = response.data;
 			list_products(serverMsg);
 		})
@@ -186,7 +194,7 @@ function getAllProducts() {
 }
 
 function deleteproduct(index) {
-
+	startSpinner();
 	const params = new URLSearchParams();
 	params.append("index", index);
 
@@ -197,15 +205,17 @@ function deleteproduct(index) {
 
 			const serverMsg = response.data.trim();
 			if (serverMsg == "success") {
+				endSpinner();
 				Notify.success("Product deleted successfully.");
 				getAllProducts();
 			} else {
-
+				endSpinner();
 				Notify.error(serverMsg);
 			}
 
 
 		}).catch(function(error) {
+			endSpinner();
 			// handle error
 			Notify.error(error);
 		});
@@ -213,6 +223,7 @@ function deleteproduct(index) {
 }
 
 function notavailableproduct(index) {
+	startSpinner();
 
 	const params = new URLSearchParams();
 	params.append("status", "NOT_AVAILABLE");
@@ -225,15 +236,17 @@ function notavailableproduct(index) {
 
 			const serverMsg = response.data.trim();
 			if (serverMsg === "success") {
+				endSpinner();
 				Notify.success("Product status updated.");
 				getAllProducts();
 			} else {
-
+				endSpinner();
 				Notify.error(serverMsg);
 			}
 
 
 		}).catch(function(error) {
+			endSpinner();
 			// handle error
 			Notify.error(error);
 		});
@@ -242,6 +255,7 @@ function notavailableproduct(index) {
 }
 
 function availableproduct(index) {
+	startSpinner();
 
 	const params = new URLSearchParams();
 	params.append("status", "AVAILABLE");
@@ -254,15 +268,17 @@ function availableproduct(index) {
 
 			const serverMsg = response.data.trim();
 			if (serverMsg === "success") {
+				endSpinner();
 				Notify.success("Product status updated.");
 				getAllProducts();
 
 			} else {
-
+				endSpinner();
 				Notify.error(serverMsg);
 			}
 
 		}).catch(function(error) {
+			endSpinner();
 			// handle error
 			Notify.error(error);
 		});
@@ -310,8 +326,11 @@ function editproduct(obj) {
 function viewproduct(obj) {
 
 	all_elements.style.display = "block";
+
 	form_sumbit.disabled = true;
+
 	quantity_price_div.style.display = "none";
+
 	disableAllInputFields();
 
 	image_url.value = obj.imageUrl;
@@ -403,6 +422,7 @@ function check_unit_cat(obj) {
 }
 
 function getsingleProduct(id, action) {
+	startSpinner();
 
 	product_id = id;
 
@@ -415,16 +435,19 @@ function getsingleProduct(id, action) {
 			const serverMsg = reponse.data;
 			if (Object.keys(serverMsg).length != 0) {
 				if (action === "view") {
-
+					endSpinner();
 					viewproduct(serverMsg);
 
 				} else {
+					endSpinner();
 					editproduct(serverMsg);
 				}
 			} else {
+				endSpinner();
 				Notify.error("No products found.");
 			}
 		}).catch(function(error) {
+			endSpinner();
 			// handle error
 			Notify.error(error);
 		});
@@ -433,4 +456,5 @@ function getsingleProduct(id, action) {
 
 getAllProducts();
 
-export { product_id ,all_elements,getAllProducts};
+
+export { product_id, all_elements, getAllProducts };
