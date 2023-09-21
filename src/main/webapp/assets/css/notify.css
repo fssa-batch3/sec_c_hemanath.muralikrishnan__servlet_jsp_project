@@ -1,15 +1,13 @@
-@charset "ISO-8859-1";
-
 body {
     position: relative;
 }
 
 #notify,
 .notify {
-	z-index: 2;
+    z-index: 5;
     position: fixed;
-    top: 40px;
-    right: 16px;
+    top: 100px;
+    right: 20px;
     max-width: 400px;
     font-weight: normal;
     display: flex;
@@ -18,8 +16,8 @@ body {
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana,
         sans-serif;
     animation-name: fadeOutRight;
-    animation-delay: 2s;
-    animation-duration: 4s;
+    animation-delay: 1s;
+    animation-duration: 5s;
 }
 
 .notify-success {
@@ -49,4 +47,13 @@ body {
         opacity: 0;
         transform: translate3d(100%, 0, 0);
     }
+}
+
+
+@media screen and (max-width:700px) {
+    #notify,
+.notify{
+    font-size: .8rem;
+}
+    
 }

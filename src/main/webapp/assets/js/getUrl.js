@@ -1,6 +1,8 @@
 function getBaseUrlFromCurrentPage() {
-	// Extract and return the base URL from the current page's URL
-	return window.location.protocol + '//' + window.location.host + '/';
+	const baseUrl = window.location.protocol + '//' + window.location.host + '/';
+	const contextPath = window.location.pathname.split('/')[1]; // Extract the context path
+
+	return baseUrl + contextPath;
 }
 
 export { getBaseUrlFromCurrentPage };

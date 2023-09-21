@@ -1,0 +1,217 @@
+/* start of register main */
+
+.login-logo {
+    text-align: center;
+    margin-top: 1em;
+    color: #429b44;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.login-main {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 1em;
+}
+
+.login-main .login-close i{
+    font-size: 2rem;
+    margin: .2em;
+    color: red;
+    cursor: pointer;
+
+}
+
+form {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 500px;
+    background-color: #f1fcfc;
+    padding: 1em;
+    border-radius: 10px;
+    
+}
+
+form .act {
+    font-size: 1.5rem;
+    color: #253D4E;
+    font-weight: bold;
+    text-align: center;
+}
+
+form .input-control label {
+    font-size: 1.3rem;
+    color: black;
+    font-weight: 400;
+}
+
+
+
+.input-control .showpwd {
+    position: absolute;
+    right: 20px;
+    top: 45px;
+   color: black;
+   cursor: pointer;
+}
+
+
+.input-wrapper {
+    position: relative;
+    margin: 1.5em auto;
+  }
+
+  .input-wrapper .showpwd {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+   color: black;
+   cursor: pointer;
+}
+
+
+  .form-control {
+    display: block;
+    line-height: 2em;
+    margin: 0;
+    padding-left: 10px;
+    width: 275px;
+    font-size: medium;
+    border: 2px solid #131313;
+    background-color: white;
+    border-radius: 5px;
+    font-weight: 500;
+  }
+  
+
+  .form-control:valid{
+    border-color: #09c372;
+  }
+
+  .form-control:invalid{
+    border-color: #ff3860;
+  }
+
+  .control-label {
+    display: block;
+    position: absolute;
+    opacity: 0;
+    bottom: 1.9rem;
+    color: black;
+    transition: 0.2s ease-in-out transform;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+  /* .form-control:placeholder-shown + .control-label {
+    visibility: hidden;
+    z-index: -1;
+    transition: 0.2s ease-in-out;
+  } */
+  .form-control:not(:placeholder-shown) + .control-label,
+  .form-control:focus:not(:placeholder-shown) + .control-label {
+    visibility: visible;
+    z-index: 1;
+    opacity: 1;
+    transform: translateY(-10px);
+    transition: 0.2s ease-in-out transform;
+  }
+
+
+::-ms-reveal{
+    display: none;
+}
+
+form .forgot-pass {
+    text-align: right;
+    color: blue;
+}
+
+form a {
+    text-align: center;
+}
+
+form button {
+    margin: 1em 4em 1em 4em;
+    padding: 1em;
+    background-color: green;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    font-size: 1.2rem
+}
+
+form button:hover {
+    background-color: black;
+    color: white;
+}
+
+form .register-here {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: green;
+    text-align: center;
+    cursor: pointer;
+}
+
+form .dont-have {
+    text-align: center;
+    font-size: 1rem;
+    color: #253D4E;
+}
+
+/* form .register-here:hover {
+   color: #429b44;
+   text-decoration: underline;
+} */
+
+
+
+/* end of register main */
+
+/* start of media queires */
+
+@media screen and (max-width: 600px) {
+
+    .login-logo{
+        font-size: 1.2rem;
+    }
+
+    .login-main form {
+        width: 300px;
+    }
+
+    .login-main form .act {
+        font-size: 1.1rem;
+    }
+
+    .login-main form label {
+        font-size: 1rem;
+    }
+
+    .login-main form .input-wrapper input {
+        width: 220px;
+    }
+
+    .login-main form .forgot-pass {
+        font-size: .9rem;
+    }
+    
+}
+
+
+@media screen and (min-width: 601px) and (max-width: 900px) {
+
+    .login-main form {
+        width: 350px;
+    }
+    
+}
+
+
+/* end of media queries */

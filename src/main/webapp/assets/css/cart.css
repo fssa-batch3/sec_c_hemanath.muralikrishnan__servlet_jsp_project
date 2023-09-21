@@ -1,0 +1,261 @@
+/* start of list top */
+
+.list-top {
+    margin: 1em 0 1em 1em;
+
+}
+
+.list-top ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 2px solid #429b44;
+    width: 220px;
+    border-radius: 5px;
+}
+
+.list-top ul li, .list-top ul li a {
+    padding: .2em;
+    color: black;
+}
+
+.list-top ul li a:hover {
+    color: #429b44;
+    font-weight: 500;
+}
+
+/* end of list top */
+
+/* table */
+
+.notify-user{
+    text-align: center;
+    margin: 2em 0 6em 0;
+}
+
+table thead th{
+    text-align: center;
+}
+
+.table__body {
+    width: 80%;
+    max-height: calc(89% - 1.6rem);
+    background-color: white;
+    margin: 2em auto;
+    border-radius: .6rem;
+    overflow: auto;
+    overflow: overlay;
+}
+
+
+
+.table__body::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+.table__body::-webkit-scrollbar-thumb {
+    border-radius: .5rem;
+    background-color: #0004;
+    visibility: hidden;
+}
+
+.table__body:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+}
+
+table {
+    width: 100%;
+}
+
+table tbody td {
+    font-weight: 600;
+    text-align: center;
+}
+
+table tbody td i {
+    color: red;
+    font-size: 1.5rem;
+    cursor: pointer;
+
+}
+
+table tbody td input {
+    width: 60px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid black;
+    text-align: center;
+    font-weight: bold;
+}
+
+td .cart_item_main .cart_item_detail p{
+
+    font-weight: 600;
+}
+
+table tbody tr .td_qty{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+   /* width: 97px; */
+    border-radius: 10px;
+
+}
+ 
+
+table tbody tr .td_qty .qty-plus,
+table tbody tr .td_qty .qty-minus {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin: 0 .5em;
+}
+
+table tbody tr .td_qty .qty-number {
+    border-right: 2px solid rgba(0, 0, 0, 0.2);
+    border-left: 2px solid rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+    margin: 0 .5em;
+    padding: 0 .3em;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+
+
+td img {
+    width: 40px;
+    height: 36px;
+    margin-right: .5rem;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+table,
+th,
+td {
+    border-collapse: collapse;
+    padding: 1rem;
+    text-align: left;
+}
+
+thead th {
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #d5d1defe;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+
+
+
+tbody tr {
+    --delay: .1s;
+    transition: .5s ease-in-out var(--delay), background-color 0s;
+}
+
+tbody tr:hover {
+    background-color: #fff6 !important;
+}
+
+tbody tr td,
+tbody tr td p,
+tbody tr td img {
+    transition: .2s ease-in-out;
+}
+
+.show-total {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-around;
+   align-items: center;
+
+}
+
+
+.show-total .cart-continue-btn a {
+    background-color: #429b44;
+    color: white;
+    padding: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.show-total .cart-continue-btn a:hover {
+    background-color: green;
+}
+
+.show-total .show-total-elem{
+    background-color: white;
+    border-radius: 5px;
+    padding: 1em;
+}
+
+.show-total .show-total-elem p {
+    font-size: 1.2rem;
+    margin: 1em 0;
+    font-weight: 600;
+}
+
+.show-total .show-total-elem .checkout-btn{
+    background-color: #429b44;
+    color: white;
+    padding: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.show-total .show-total-elem .checkout-btn:hover{
+    background-color: green;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+
+
+@media (max-width: 1000px) {
+    td:not(:first-of-type) {
+        min-width: 12.1rem;
+    }
+}
+
+
+/* end of cart cont */
+
+@media screen and (max-width: 600px) {
+
+    .list-top ul {
+        width: 200px;
+    }
+
+    .list-top ul li a,  .list-top ul li {
+        font-size: .9rem;
+    }
+
+    
+}
+
+
+@media screen and (min-width: 601px) and (max-width: 900px) {
+
+     .list-top ul {
+        width: 240px;
+    }
+
+    .list-top ul li a,  .list-top ul li {
+        font-size: 1.1rem;
+    }
+
+    
+    
+    
+}
+
