@@ -1,0 +1,147 @@
+/* start of list top */
+
+.list-top {
+    margin: 1em 0 1em 1em;
+
+}
+
+.list-top .all-products {
+    border: 2px solid #429b44;
+    width: 130px;
+    margin-bottom: 1em;
+    padding: .5em;
+    border-radius: 5px;
+}
+
+.list-top ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 2px solid #429b44;
+    width: 200px;
+    border-radius: 5px;
+}
+
+.list-top ul li, .list-top ul li a {
+    padding: .2em;
+    color: black;
+}
+
+.list-top ul li a:hover {
+    color: #429b44;
+    font-weight: 500;
+}
+
+/* end of list top */
+
+
+/* start of about us */
+
+.about-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2em;
+    color: green;
+    font-weight: bold;
+}
+
+.about-us-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+
+.about-us-content img {
+    width: 600px;
+}
+
+.about-us-content p {
+    width: 600px;
+    text-align: justify;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+/* end of about us */
+
+/* start of media queries */
+
+@media screen and (max-width: 600px) {
+
+    .list-top ul{
+        width: 180px;
+    }
+
+    .list-top ul li a, .list-top ul li {
+        font-size: .9rem;
+    }
+
+    .about-us .about-title {
+        text-align: center;
+        font-size: 1.5rem;
+        margin: 1em;
+    }
+
+    .about-us-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .about-us-content p {
+        width: auto;
+        font-size: 1rem;
+        margin: 0 1em;
+    }
+
+    .about-us-content img {
+        width: 300px;
+    }
+    
+}
+
+@media screen and (min-width: 601px) and (max-width: 900px) {
+
+    .list-top ul{
+        width: 220px;
+    }
+
+    .list-top ul li a, .list-top ul li {
+        font-size: 1.1rem;
+    }
+
+    .about-us .about-title {
+        text-align: center;
+        font-size: 1.7rem;
+        margin: 1em;
+    }
+
+    .about-us-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .about-us-content p {
+        width: auto;
+        font-size: 1rem;
+        margin: 0 1em;
+    }
+
+    .about-us-content img {
+        width: 350px;
+    }
+    
+}
+
+@media screen and (min-width: 901px) and (max-width: 1200px) {
+    .about-us-content {
+        display: flex;
+        flex-direction: column;
+        
+    }
+    
+}
+
+/* end of media queries */
+

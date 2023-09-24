@@ -1,0 +1,42 @@
+/* start of order success */
+
+.order-success-main {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.order-success-main i {
+    font-size: 4rem;
+    color: green;
+}
+
+
+.order-success-main p {
+    font-size: 2rem;
+    margin: 2em 0;
+    color: #253D4E;
+    font-weight: 500;
+}
+
+.order-success-main a {
+    background-color: green;
+    padding: 1em;
+    color: white;
+    font-size: 1.5rem;
+    border-radius: 10px;
+}
+
+/* end of order success */
+
+@media screen and (max-width: 600px) {
+
+    .order-success-main p {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+    
+}
+

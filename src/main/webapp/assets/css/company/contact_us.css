@@ -1,0 +1,255 @@
+/* start of list top */
+
+.list-top {
+    margin: 1em 0 1em 1em;
+
+}
+
+.list-top .all-products {
+    border: 2px solid #429b44;
+    width: 130px;
+    margin-bottom: 1em;
+    padding: .5em;
+    border-radius: 5px;
+}
+
+.list-top ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 2px solid #429b44;
+    width: 220px;
+    border-radius: 5px;
+}
+
+.list-top ul li, .list-top ul li a {
+    padding: .2em;
+    color: black;
+}
+
+.list-top ul li a:hover {
+    color: #429b44;
+    font-weight: 500;
+}
+
+/* end of list top */
+
+
+/* start of contact us sec */
+
+.contact-us-main {
+    margin-top: 4em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.contact-title {
+    margin-bottom: 2em;
+    font-size: 1.5rem;
+    color: #253D4E;
+    font-weight: 600;
+}
+
+/* start of contact us left side */
+
+iframe {
+    border-radius: 20px;
+}
+
+
+.contact-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1em;
+}
+
+.contact-content > i {
+    margin-right: 1em;
+    font-size: 1.2rem;
+    color: #429b44;
+}
+
+.contact-content p a {
+    color: #253D4E;
+    text-decoration: none;
+}
+
+/* end of contact us right side */
+
+/* contact us start of right side */
+
+.contact-us-right-side {
+    padding: 2em;
+    background: #f1fcfc;
+    border-radius: 10px;
+}
+
+.contact-us-right-side > p {
+    font-size: 2rem;
+    color: #253D4E;
+    
+
+}
+
+.contact-us-right-side form {
+    width: 400px;
+    height: 500px;
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: white;
+    padding: 1em;
+    border-radius: 10px;
+   
+}
+
+form input {
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: groove;
+    font-size: 1.2rem;
+    padding-left: .5em;
+  }
+  
+.no-outline:focus {
+    outline: none;
+  }
+
+form label {
+    font-size: 1.2rem;
+    color: #253D4E;
+}
+
+form textarea {
+    border: 2px solid #429b44;
+    outline: none;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    padding-left: .5em;
+  }
+form button {
+    width: 180px;
+    padding: 1em;
+    border-radius: 10px;
+    outline: none;
+    background-color:green;
+    color: white;
+    border: 2px solid white;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* contact us end of right side */
+
+/* end of contact us sec */
+
+
+/* media queries start */
+
+@media screen and (max-width: 600px) {
+
+    .list-top ul {
+        width: 190px;
+    }
+
+    .list-top ul li a, .list-top ul li {
+        font-size: .9rem;
+    }
+
+    .contact-us-main{
+        margin: 1.5em 0 0 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contact-us-main .contact-us-left-side .contact-title {
+       text-align: center;
+       
+    }
+
+    .contact-us-left-side .google-map iframe {
+        width: auto;
+
+    }
+
+    .contact-us-main .contact-us-right-side{
+        padding: 1em;
+    }
+
+    .contact-us-main .contact-us-right-side >p {
+        font-size: 1.2rem;
+    }
+    
+    .contact-us-main .contact-us-right-side form {
+        width: 300px;
+    }
+
+}
+
+@media screen and (min-width: 601px) and (max-width: 900px) {
+    
+    .list-top ul {
+        width: 230px;
+    }
+
+    .list-top ul li a, .list-top ul li {
+        font-size: 1.1rem;
+    }
+
+    .contact-us-main{
+        margin: 1.5em 0 0 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .contact-us-main .contact-us-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .contact-us-main .contact-us-left-side .contact-title {
+       text-align: center;
+       
+    }
+
+    .contact-us-left-side .google-map iframe {
+        width: 500px;
+
+    }
+
+    .contact-us-main .contact-us-right-side{
+        padding: 1em;
+    }
+
+    .contact-us-main .contact-us-right-side >p {
+        font-size: 1.2rem;
+    }
+    
+    .contact-us-main .contact-us-right-side form {
+        width: 400px;
+    }
+
+}
+
+@media screen and (min-width: 901px) and (max-width: 1200px) {
+
+    .contact-us-main{
+        display: flex;
+        flex-direction: column;
+    }
+    
+}
+
+/* media queries end */
+
+
