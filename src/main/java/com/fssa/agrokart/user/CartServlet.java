@@ -75,7 +75,6 @@ public class CartServlet extends HttpServlet {
 
 				JSONObject cartObject = new JSONObject(getObject);
 
-
 				// Get the user's session
 				HttpSession session = request.getSession();
 
@@ -158,6 +157,31 @@ public class CartServlet extends HttpServlet {
 				// Handle JSON parsing or other exceptions
 				ExceptionLoggerUtil.logException(e);
 				response.sendError(CUST0M_STATUS_CODE, "Failed to read all cart product");
+			}
+
+		}
+
+		if (action.equals("getLength")) {
+
+			try {
+				// Get the user's session
+				HttpSession session = request.getSession();
+				// Retrieve the user's cart from the session
+				List<Object> cart = (List<Object>) session.getAttribute("cart");
+
+				int count = 0;
+
+				if (session != null && cart != null && !cart.isEmpty()) {
+
+					count = cart.size();
+				}
+
+				response.getWriter().write(count+"");
+
+			} catch (Exception e) {
+				// Handle JSON parsing or other exceptions
+				ExceptionLoggerUtil.logException(e);
+				response.sendError(CUST0M_STATUS_CODE, "Failed to read cart size");
 			}
 
 		}

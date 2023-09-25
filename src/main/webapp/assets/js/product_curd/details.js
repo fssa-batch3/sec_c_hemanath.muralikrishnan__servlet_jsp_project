@@ -374,15 +374,15 @@ function show_indv(obj) {
 	indv_add_button_div.append(indv_add_to_cart);
 
 	// favorite div
-	//favorite_div = document.createElement("div");
-	//favorite_div.setAttribute("class", "favorite");
-	//indv_qty_cat_div.append(favorite_div);
+	favorite_div = document.createElement("div");
+	favorite_div.setAttribute("class", "favorite");
+	indv_qty_cat_div.append(favorite_div);
 
 	// favorite i
-	//favorite_i = document.createElement("i");
-	//favorite_i.setAttribute("class", "fa-regular fa-heart");
-	//favorite_i.setAttribute("id", "indv-fav-btn");
-	//favorite_div.append(favorite_i);
+	favorite_i = document.createElement("i");
+	favorite_i.setAttribute("class", "fa-regular fa-heart");
+	favorite_i.setAttribute("id", "indv-fav-btn");
+	favorite_div.append(favorite_i);
 
 	// description div
 	desc_div = document.createElement("div");

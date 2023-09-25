@@ -1,28 +1,46 @@
+import { getBaseUrlFromCurrentPage } from "./getUrl.js";
+import { handleGenericError } from "./handelerrors.js";
+import { logged_email } from "./is_logged.js";
+import { startSpinner, endSpinner } from "./loading.js";
+
+
 const cart_number = document.getElementById("cart-count");
 
 const mobile_cart_number = document.getElementById("mobile-cart-count");
 
-function cart_count_fun() {
-  const cart_items_user = JSON.parse(localStorage.getItem("cart_items"));
+const fullUrl = getBaseUrlFromCurrentPage() + "/CartCRUDServlet?action=getLength";
 
-  let cart_count = 0;
+async function cart_count_fun() {
 
-  cart_number.innerText = "";
+	cart_number.innerText = "";
 
-  mobile_cart_number.innerText = "";
+	mobile_cart_number.innerText = "";
 
-  if (cart_items_user != null) {
-    cart_items_user.forEach((obj) => {
-      if (user_id === obj.user_id) {
-        ++cart_count;
-      }
-    });
-  }
+	if (logged_email) {
 
-  cart_number.innerText = cart_count;
+		try {
+			startSpinner();
+			const response = await axios.post(fullUrl);
+			const count = response.data;
+			cart_number.innerText = count;
+			mobile_cart_number.innerText = count;
 
-  mobile_cart_number.innerText = cart_count;
+		} catch (error) {
+
+			handleGenericError(error);
+		}
+		finally {
+			endSpinner();
+		}
+
+	} else {
+		cart_number.innerText = "0";
+
+		mobile_cart_number.innerText = "0";
+
+	}
 }
 
+await cart_count_fun();
 
 export { cart_count_fun };

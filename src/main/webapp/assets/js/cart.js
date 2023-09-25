@@ -93,6 +93,8 @@ async function show_cart_products() {
 		});
 
 		endSpinner();
+
+		checkCart();
 	});
 
 	show_total();
@@ -123,6 +125,7 @@ function cart_list(item, pro) {
 
 		const not_ready = document.createElement("span");
 		not_ready.innerHTML = "Sorry, Product quantity is <br> higher than available stock.<br>";
+		not_ready.setAttribute("class", "not_ready_span");
 		not_ready.classList.add("error-message");
 		pro_details_div.appendChild(not_ready);
 	}
@@ -131,6 +134,7 @@ function cart_list(item, pro) {
 
 		const not_available = document.createElement("span");
 		not_available.innerHTML = "Sorry, Product is not available.";
+		not_available.setAttribute("class", "not_available_span");
 		not_available.classList.add("error-message");
 		pro_details_div.appendChild(not_available);
 	}
@@ -271,8 +275,11 @@ async function find_which_unit(par, num, qty_id, cartPro) {
 		}
 
 		const { unit, weight } = quantityObj;
-		const avl_into_gram = parProduct.availableStock.num * (unit == "KG" ? 1000 : 1);
+		const avl_into_gram = parProduct.availableStock.num * (unit == "KG" || unit == "GM" ? 1000 : 1);
 		const check = num * (unit == "KG" ? weight * 1000 : weight);
+
+		console.log(avl_into_gram);
+		console.log(check);
 
 		const updatedObj = { ...parCartPro };
 		updatedObj.quantity = num;
@@ -352,7 +359,10 @@ async function deletecartitem(index) {
 
 			await main();
 			Notify.success("Product Removed from cart.");
+			checkCart();
 			show_total();
+			cart_count_fun();
+
 
 		} else {
 
@@ -366,5 +376,33 @@ async function deletecartitem(index) {
 		endSpinner();
 	}
 }
+
+function checkCart() {
+	const ready = document.querySelectorAll(".not_ready_span");
+	const notAvbl = document.querySelectorAll(".not_available_span");
+	const notavblmsg = document.querySelector(".not_available_message");
+	const readymsg = document.querySelector(".not_ready_message");
+	const checkoutMsg = document.querySelector(".check_out_message");
+
+	// Hide all error messages initially
+	notavblmsg.style.display = "none";
+	readymsg.style.display = "none";
+	checkoutMsg.style.display = "none";
+
+	// Enable the button if neither error condition is met
+	if (ready.length === 0 && notAvbl.length === 0) {
+		elem.classList.remove("disabled");
+	} else {
+		elem.classList.add("disabled");
+		if (ready.length > 0) {
+			readymsg.style.display = "block";
+		}
+		if (notAvbl.length > 0) {
+			notavblmsg.style.display = "block";
+		}
+		checkoutMsg.style.display = "block";
+	}
+}
+
 
 

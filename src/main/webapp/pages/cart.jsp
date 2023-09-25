@@ -116,6 +116,13 @@
 
 	</div>
 
+	<p class="notify_messages not_available_message error-message ">Please
+		remove cart items which is not available.</p>
+	<p class="notify_messages not_ready_message error-message">Please
+		add quantity below the available quantity.</p>
+	<p class="notify_messages check_out_message error-message">Or
+		Remove the product from the cart to proceed with checkout.</p>
+
 	<div class="show-total">
 
 		<div class="cart-continue-btn">

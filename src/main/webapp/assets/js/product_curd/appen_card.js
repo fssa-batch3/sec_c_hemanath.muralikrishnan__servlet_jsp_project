@@ -6,6 +6,7 @@ import { logged_email, findUserRecordByEmail } from "../is_logged.js";
 import { handleGenericError } from "../handelerrors.js";
 
 
+
 const root_loc = getBaseUrlFromCurrentPage();
 
 const readAllServlet = root_loc + "/ReadAllProductServlet";
@@ -72,6 +73,10 @@ function list_products(array = []) {
 	}
 
 	array.forEach((item, index) => {
+
+		if (!item.status === "AVAILABLE") {
+			return;
+		}
 		// product_container_div
 		const product_container_div = document.createElement("div");
 		product_container_div.setAttribute("class", "product-container");
@@ -413,7 +418,7 @@ async function get_cart_ele(id, no_qty) {
 				} else {
 
 					add_product_to_cart(id, selectedQty, no_qty);
-
+					cart_count_fun();
 				}
 
 			} else {

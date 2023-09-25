@@ -194,7 +194,7 @@ tbody tr td img {
 .show-total .show-total-elem {
 	background-color: white;
 	border-radius: 5px;
-	padding: 1em;
+	padding: 1.3em;
 }
 
 .show-total .show-total-elem p {
@@ -225,7 +225,12 @@ tbody tr td img {
 	color: red;
 	font-weight: bold;
 	font-size: 14px;
+	text-align: center;
 	/* Default font size */
+}
+
+.notify_messages {
+	display: none;
 }
 
 @media (max-width: 1000px) {
