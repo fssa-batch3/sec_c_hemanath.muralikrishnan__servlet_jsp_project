@@ -278,9 +278,6 @@ async function find_which_unit(par, num, qty_id, cartPro) {
 		const avl_into_gram = parProduct.availableStock.num * (unit == "KG" || unit == "GM" ? 1000 : 1);
 		const check = num * (unit == "KG" ? weight * 1000 : weight);
 
-		console.log(avl_into_gram);
-		console.log(check);
-
 		const updatedObj = { ...parCartPro };
 		updatedObj.quantity = num;
 		updatedObj.ready_for_checkout = check <= avl_into_gram;

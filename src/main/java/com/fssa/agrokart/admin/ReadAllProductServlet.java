@@ -39,8 +39,6 @@ public class ReadAllProductServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		
 
 		try {
 			// Retrieve a list of all products using the ProductService

@@ -4,168 +4,180 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <!-- header stylesheet -->
-    <link rel="stylesheet" href="../../assets/css/base_style/header.css" type="text/css">
-    <!-- header stylesheet -->
+<!-- header stylesheet -->
+<link rel="stylesheet" href="../../assets/css/base_style/header.css"
+	type="text/css">
+<!-- header stylesheet -->
 
-    <!-- body stylesheet -->
-    <link rel="stylesheet" href="../../assets/css/base_style/body.css" type="text/css">
-    <!-- body stylesheet -->
+<!-- body stylesheet -->
+<link rel="stylesheet" href="../../assets/css/base_style/body.css"
+	type="text/css">
+<!-- body stylesheet -->
 
-    <!-- footer stylesheet -->
-    <link rel="stylesheet" href="../../assets/css/base_style/footer.css" type="text/css">
-    <!-- footer stylesheet -->
+<!-- footer stylesheet -->
+<link rel="stylesheet" href="../../assets/css/base_style/footer.css"
+	type="text/css">
+<!-- footer stylesheet -->
 
-    <!-- stylesheet -->
-    <link rel="stylesheet" href="../../assets/css/order/place_order.css" type="text/css">
-    <!-- stylesheet -->
+<!-- stylesheet -->
+<link rel="stylesheet" href="../../assets/css/order/place_order.css"
+	type="text/css">
+<!-- stylesheet -->
 
-    <!-- fontawesome stylesheet -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
-    <!-- fontawesome stylesheet -->
+<!-- fontawesome stylesheet -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+	integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+	crossorigin="anonymous" referrerpolicy="no-referrer">
+<!-- fontawesome stylesheet -->
 
-    <!-- noitfy css -->
+<!-- noitfy css -->
 
-    <link rel="stylesheet" href="../../assets/css/notify.css">
+<link rel="stylesheet" href="../../assets/css/notify.css">
 
-    <link rel="icon" type="image/png" sizes="60x32" href="../../assets/images/tabicon/icon.png">
-    <title>AgroKart - Ecommerce</title>
+<link rel="icon" type="image/png" sizes="60x32"
+	href="../../assets/images/tabicon/icon.png">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/assets/css/loading.css">
+
+<title>AgroKart - Ecommerce</title>
 </head>
 
 <body>
+	<jsp:include page="../loading.jsp"></jsp:include>
 
-    <!-- mobile device nav bar start -->
+	<!-- mobile device nav bar start -->
 
-    <!-- mobile device nav bar end  -->
+	<!-- mobile device nav bar end  -->
 
-    <!-- end of header -->
+	<!-- end of header -->
 
-    <!-- end of navigation -->
+	<!-- end of navigation -->
 
-    <p class="checkout-title">Checkout</p>
+	<p class="checkout-title">Checkout</p>
 
-    <!-- orders starts -->
+	<!-- orders starts -->
 
-   <form id="place-order-form">
-    
-    <div class="orders-cont">
+	<form id="place-order-form">
 
-        <!-- start of left side  orders cont -->
-        <div class="order-left-side">
+		<div class="orders-cont">
 
-            <div class="delivery-date-cont">
+			<!-- start of left side  orders cont -->
+			<div class="order-left-side">
 
-                <p>Select your date</p>
+				<div class="delivery-date-cont">
 
-                <div class="dates-cont">
+					<p>Select your date</p>
 
-                    <div class="dates">
-                        <input type="radio" name="select_date" id="today" required title="Please select delivery date">
-                        <label for="today" id="today_label"></label>
-                    </div>
+					<div class="dates-cont">
 
-                    <div class="dates">
-                        <input type="radio" name="select_date" id="tomorrow" required title="Please select delivery date">
-                        <label for="tomorrow" id="tomorrow_label"></label>
-                    </div>
-                   
-                </div>
+						<div class="dates">
+							<input type="radio" name="select_date" id="today" required
+								title="Please select delivery date"> <label for="today"
+								id="today_label"></label>
+						</div>
 
-            </div>
+						<div class="dates">
+							<input type="radio" name="select_date" id="tomorrow" required
+								title="Please select delivery date"> <label
+								for="tomorrow" id="tomorrow_label"></label>
+						</div>
 
-            <div class="address-section-order">
+					</div>
 
-                <p class="address-title">Address</p>
+				</div>
 
-                <div class="append_available_address">
+				<div class="address-section-order">
 
-                </div>
+					<p class="address-title">Address</p>
 
-            </div>
+					<div class="append_available_address"></div>
 
-        </div>
+				</div>
 
-        <!-- end of left side orders cont -->
+			</div>
 
-        <!-- start of orders right side cont -->
+			<!-- end of left side orders cont -->
 
-        <div class="orders-right-side">
+			<!-- start of orders right side cont -->
 
-            <section class="table__body">
-                <table aria-describedby="overview">
-                    <thead>
-                        <tr>
-                            <th>Product Detail</th>
-                            <th>Unit Price</th>
-                            <th>Total Qty</th>
-                            <th>Quantity</th>
-                            <th>Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody class="body_table">
-    
-                    </tbody>
-                </table>
-            </section>
+			<div class="orders-right-side">
 
-            <div class="payment-options">
+				<section class="table__body">
+					<table aria-describedby="overview">
+						<thead>
+							<tr>
+								<th>Product Detail</th>
+								<th>Unit Price</th>
+								<th>Total Qty</th>
+								<th>Quantity</th>
+								<th>Subtotal</th>
+							</tr>
+						</thead>
+						<tbody class="body_table">
 
-                <p class="main-total"></p>
+						</tbody>
+					</table>
+				</section>
 
-                <p class="payment-title">Payment options</p>
+				<div class="payment-options">
 
-                <div class="payment-div">
+					<p class="main-total"></p>
 
-                    <input type="radio" id="cash-on-delivery" value="cash_on_delivery" name="payment-type" required title="please select payment method">
-                    <label for="cash-on-delivery">Cash on delivery</label>
-                </div>
-              
-                <div class="payment-div">
-                    <input type="radio" id="razorpay" value="razorpay" name="payment-type" required title="please select payment method">
-                    <label for="razorpay">Online Payment</label>
-     
-                </div>
+					<p class="payment-title">Payment options</p>
 
-                <button type="submit" class="checkout_btn">Place Order</button>
-            </div>
+					<div class="payment-div">
 
-        </div>
+						<input type="radio" id="cash-on-delivery" value="cash_on_delivery"
+							name="payment-type" required title="please select payment method">
+						<label for="cash-on-delivery">Cash on delivery</label>
+					</div>
 
-        <!-- end of orders right side cont -->
+					<div class="payment-div">
+						<input type="radio" id="razorpay" value="razorpay"
+							name="payment-type" required title="please select payment method">
+						<label for="razorpay">Online Payment</label>
 
-    </div>
+					</div>
 
-</form> 
-    <!-- end of orders -->
+					<button type="submit" class="checkout_btn">Place Order</button>
+				</div>
 
-    <!-- footer start -->
+			</div>
 
-    <!-- footer ends -->
+			<!-- end of orders right side cont -->
 
-     <!-- logged check js -->
+		</div>
 
-     <script type="module" src="../../assets/js/is_logged.js"></script>
+	</form>
+	<!-- end of orders -->
 
-     <!-- wishlist count -->
+	<!-- footer start -->
 
-    <script type="module" src="../../assets/js/wishlist/wishlist_count.js"></script>
+	<!-- footer ends -->
 
-    <!-- cart_count -->
+	<!-- logged check js -->
 
-    <script type="module" src="../../assets/js/cart_count.js"></script>
+	<script type="module" src="../../assets/js/is_logged.js"></script>
 
-    <!-- this page script -->
+	<!-- wishlist count -->
 
-    <script type="module" src="../../assets/js/place_order.js"></script>
+	<script type="module" src="../../assets/js/wishlist/wishlist_count.js"></script>
 
-   <script type="module" src="../../assets/js/vendor/notify.js"></script>
+	<!-- cart_count -->
+
+	<script type="module" src="../../assets/js/cart_count.js"></script>
+
+	<!-- this page script -->
+
+	<script type="module" src="../../assets/js/place_order.js"></script>
+
+	<script type="module" src="../../assets/js/vendor/notify.js"></script>
 </body>
 
 </html>

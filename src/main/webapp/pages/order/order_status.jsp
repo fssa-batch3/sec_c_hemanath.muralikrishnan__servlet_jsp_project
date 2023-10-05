@@ -42,10 +42,14 @@
 
 <link rel="icon" type="image/png" sizes="60x32"
 	href="<%=request.getContextPath()%>/assets/images/tabicon/icon.png">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/assets/css/loading.css">
+
 <title>AgroKart - Ecommerce</title>
 </head>
 
 <body>
+	<jsp:include page="../loading.jsp"></jsp:include>
 
 	<!-- mobile device nav bar start -->
 

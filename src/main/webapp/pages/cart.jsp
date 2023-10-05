@@ -127,8 +127,7 @@
 
 		<div class="cart-continue-btn">
 			<a
-				href="<%=request.getContextPath()%>/pages/product_list/list_product.jsp?cat=00">Continue
-				Shopping</a>
+				href="<%=request.getContextPath()%>/pages/product_list/list_product.jsp?cat=00">Continue Shopping</a>
 		</div>
 
 		<div class="show-total-elem">

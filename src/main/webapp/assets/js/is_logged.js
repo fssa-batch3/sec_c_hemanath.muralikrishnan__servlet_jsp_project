@@ -818,7 +818,7 @@ mobile_search.addEventListener("input", () => {
 
 function mobile_search_fun(search_value) {
 	const result_arr = products_db.filter((item) => {
-		const pro_name = item.name.eng;
+		const pro_name = item.name.englishName;
 
 		const lc_pro_name = pro_name.toLowerCase();
 

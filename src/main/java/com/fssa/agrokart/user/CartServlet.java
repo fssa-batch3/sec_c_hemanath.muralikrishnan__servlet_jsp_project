@@ -34,7 +34,13 @@ public class CartServlet extends HttpServlet {
 
 		String action = request.getParameter("action");
 
-		if (action.equals("add")) {
+		if (action == null || action.isEmpty()) {
+
+			response.sendError(CUST0M_STATUS_CODE, "Cannot find action parameter");
+			return;
+		}
+
+		if ("add".equals(action)) { // TODO : change the position of the checking
 
 			String getObject = request.getParameter("item");
 
@@ -67,9 +73,14 @@ public class CartServlet extends HttpServlet {
 			}
 		}
 
-		if (action.equals("update")) {
+		if ("update".equals(action)) {
 
 			String getObject = request.getParameter("item");
+
+			if (getObject == null || getObject.isEmpty()) {
+				response.sendError(CUST0M_STATUS_CODE, "Invalid cart item data.");
+				return;
+			}
 
 			try {
 
@@ -106,10 +117,15 @@ public class CartServlet extends HttpServlet {
 			}
 		}
 
-		if (action.equals("delete")) {
+		if ("delete".equals(action)) {
 
 			// Get the unique identifier of the item to delete from the request
 			String itemIdToDelete = request.getParameter("itemIdToDelete");
+
+			if (itemIdToDelete == null || itemIdToDelete.isEmpty()) {
+				response.sendError(CUST0M_STATUS_CODE, "Cannot find delete parameter");
+				return;
+			}
 
 			try {
 				HttpSession session = request.getSession();
@@ -141,13 +157,14 @@ public class CartServlet extends HttpServlet {
 
 		}
 
-		if (action.equals("readAll")) {
+		if ("readAll".equals(action)) {
 
 			try {
 				// Get the user's session
 				HttpSession session = request.getSession();
 
 				// Retrieve the user's cart from the session
+				@SuppressWarnings("unchecked")
 				List<Object> cart = (List<Object>) session.getAttribute("cart");
 				JSONArray cartArr = new JSONArray(cart);
 
@@ -161,7 +178,7 @@ public class CartServlet extends HttpServlet {
 
 		}
 
-		if (action.equals("getLength")) {
+		if ("getLength".equals(action)) {
 
 			try {
 				// Get the user's session
@@ -176,7 +193,7 @@ public class CartServlet extends HttpServlet {
 					count = cart.size();
 				}
 
-				response.getWriter().write(count+"");
+				response.getWriter().write(count + "");
 
 			} catch (Exception e) {
 				// Handle JSON parsing or other exceptions

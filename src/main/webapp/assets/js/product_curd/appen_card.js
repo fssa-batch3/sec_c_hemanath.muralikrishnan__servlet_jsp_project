@@ -5,14 +5,11 @@ import { startSpinner, endSpinner } from "../loading.js";
 import { logged_email, findUserRecordByEmail } from "../is_logged.js";
 import { handleGenericError } from "../handelerrors.js";
 
-
-
 const root_loc = getBaseUrlFromCurrentPage();
 
 const readAllServlet = root_loc + "/ReadAllProductServlet";
 const cartServlet = root_loc + "/CartCRUDServlet";
 
-const cart_items = JSON.parse(localStorage.getItem("cart_items")) ?? [];
 
 let user_id;
 let product_json;
@@ -74,7 +71,7 @@ function list_products(array = []) {
 
 	array.forEach((item, index) => {
 
-		if (!item.status === "AVAILABLE") {
+		if (!(item.status === "AVAILABLE")) {
 			return;
 		}
 		// product_container_div
@@ -417,8 +414,18 @@ async function get_cart_ele(id, no_qty) {
 
 				} else {
 
-					add_product_to_cart(id, selectedQty, no_qty);
-					cart_count_fun();
+					const avl_into_gram = productObj.availableStock.num * (selectedUnit == "KG" || selectedUnit == "GM" ? 1000 : 1);
+					const check = no_qty * (selectedUnit == "KG" ? selectedWeight * 1000 : selectedWeight);
+
+					if (!(check <= avl_into_gram)) {
+
+						Notify.error("Cannot add product to the cart more than available stock.");
+					} else {
+						add_product_to_cart(id, selectedQty, no_qty, productObj.seller.id);
+						cart_count_fun();
+					}
+
+
 				}
 
 			} else {
@@ -437,7 +444,8 @@ async function get_cart_ele(id, no_qty) {
 }
 
 
-async function add_product_to_cart(id, selectedQty, no_qty) {
+async function add_product_to_cart(id, selectedQty, no_qty, seller) {
+
 
 	const currentTimestamp = Date.now();
 	const seconds = Math.floor(currentTimestamp / 1000); // Convert milliseconds to seconds
@@ -445,6 +453,7 @@ async function add_product_to_cart(id, selectedQty, no_qty) {
 	const cart_item_id = `${user_id}_${currentTimestamp}_${seconds}`;
 
 	const cart_obj = {
+		seller_id: seller,
 		cart_item_id: cart_item_id,
 		product_id: id,
 		qty_id: selectedQty,
