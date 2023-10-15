@@ -20,6 +20,9 @@ async function main() {
 			load_address(user_profile.id);
 			document.querySelector(".show-address").innerHTML = " ";
 			appendProfileDetails();
+		} else {
+
+			window.location.href = getBaseUrlFromCurrentPage() + "/pages/error/error_page.jsp?error=401&msg= User is not authenticated, Unauthorized access."
 		}
 	} catch (error) {
 		handleGenericError(error);
@@ -432,15 +435,40 @@ function show_address(address_array = []) {
 
 		i_menu.addEventListener("click", () => {
 			if (address_menus.style.display === "none") {
-				address_menus.style.display = "block"; // to show the element
+				address_menus.style.display = "block";
 			} else {
-				address_menus.style.display = "none"; // to hide the element
+				address_menus.style.display = "none";
 			}
 		});
+
+		// Add a click event listener to the window
+		window.addEventListener("click", (event) => {
+			const iMenu = i_menu;
+			const addressMenus = address_menus;
+
+			if (addressMenus.style.display === "block" && !isDescendant(addressMenus, event.target) && event.target !== iMenu) {
+				// If address_menus is displayed and the click was outside the menu and not on the i_menu button
+				addressMenus.style.display = "none";
+			}
+		});
+
+
 		endSpinner();
 	});
 
 }
+
+function isDescendant(parent, child) {
+	let node = child.parentNode;
+	while (node != null) {
+		if (node == parent) {
+			return true;
+		}
+		node = node.parentNode;
+	}
+	return false;
+}
+
 // delete logic
 async function deleteAddress(index) {
 	const confirmation = confirm("Are you sure?");

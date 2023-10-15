@@ -10,7 +10,7 @@ const readAllServlet = getBaseUrlFromCurrentPage() + "/ReadAllProductServlet";
 const cartServlet = getBaseUrlFromCurrentPage() + "/CartCRUDServlet";
 
 const cart_append_div = document.querySelector(".body_table");
-const elem = document.querySelector(".checkout-btn");
+
 
 
 let product_details;
@@ -54,7 +54,7 @@ async function main() {
 
 				document.querySelector(
 					".cart-main"
-				).innerHTML = `<h1 class="notify-user">No Cart items</h1>`;
+				).innerHTML = `<h1 class="notify-user">No Cart items found.</h1>`;
 
 			}
 		} catch (error) {
@@ -388,9 +388,9 @@ function checkCart() {
 
 	// Enable the button if neither error condition is met
 	if (ready.length === 0 && notAvbl.length === 0) {
-		elem.classList.remove("disabled");
+		document.querySelector(".checkout-btn").classList.remove("disabled");
 	} else {
-		elem.classList.add("disabled");
+		document.querySelector(".checkout-btn").classList.add("disabled");
 		if (ready.length > 0) {
 			readymsg.style.display = "block";
 		}

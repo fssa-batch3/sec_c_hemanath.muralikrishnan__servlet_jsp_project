@@ -83,6 +83,30 @@
 		<description></description>
 		<servlet-class>com.fssa.agrokart.user.OrderServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>demo</servlet-name>
+		<display-name>demo</display-name>
+		<description></description>
+		<servlet-class>com.fssa.agrokart.user.demo</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>OrderCreation</servlet-name>
+		<display-name>OrderCreation</display-name>
+		<description></description>
+		<servlet-class>com.fssa.agrokart.user.OrderCreation</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>WishlistServlet</servlet-name>
+		<display-name>WishlistServlet</display-name>
+		<description></description>
+		<servlet-class>com.fssa.agrokart.user.WishlistServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>CategoryServlet</servlet-name>
+		<display-name>CategoryServlet</display-name>
+		<description></description>
+		<servlet-class>com.fssa.agrokart.user.CategoryServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>ProductServlet</servlet-name>
 		<url-pattern>/ProductServlet</url-pattern>
@@ -134,6 +158,22 @@
 	<servlet-mapping>
 		<servlet-name>OrderServlet</servlet-name>
 		<url-pattern>/OrderServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>demo</servlet-name>
+		<url-pattern>/demo</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>OrderCreation</servlet-name>
+		<url-pattern>/OrderCreation</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>WishlistServlet</servlet-name>
+		<url-pattern>/WishlistServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CategoryServlet</servlet-name>
+		<url-pattern>/CategoryServlet</url-pattern>
 	</servlet-mapping>
 
 	<error-page>

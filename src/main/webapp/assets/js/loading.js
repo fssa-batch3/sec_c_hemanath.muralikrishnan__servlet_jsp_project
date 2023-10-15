@@ -1,12 +1,14 @@
 function startSpinner() {
-	const loadingOverlay = document.getElementById('loading-overlay');
-	loadingOverlay.style.display = 'flex'; // Display the overlay
+	// Get a reference to the loading container
+	const loadingContainer = document.getElementById("loadingContainer");
+	loadingContainer.style.display = "block"; // Show the loading container
 }
 
 
 function endSpinner() {
-	const loadingOverlay = document.getElementById('loading-overlay');
-	loadingOverlay.style.display = 'none'; // Display the overlay
+	// Get a reference to the loading container
+	const loadingContainer = document.getElementById("loadingContainer");
+	loadingContainer.style.display = "none"; // Show the loading container
 }
 
 

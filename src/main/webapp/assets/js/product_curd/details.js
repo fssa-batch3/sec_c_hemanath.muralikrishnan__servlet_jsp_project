@@ -4,20 +4,41 @@ import { Notify } from "../vendor/notify.js";
 import { getBaseUrlFromCurrentPage } from "../getUrl.js";
 import { handleGenericError } from "../handelerrors.js";
 import { endSpinner, startSpinner } from "../loading.js";
+import { logged_email, findUserRecordByEmail } from "../is_logged.js";
+
 
 const readAllServlet = getBaseUrlFromCurrentPage() + "/ReadAllProductServlet";
 const readSingleProudct = getBaseUrlFromCurrentPage() + "/ReadProductById";
 const sellerServlet = getBaseUrlFromCurrentPage() + "/SellerCRUDServlet";
+const wishlistServlet = getBaseUrlFromCurrentPage() + "/WishlistCRUD";
 // product details JSON
 let product_details;
 let seller_details;
-// wishlist json
-const favourite_list = JSON.parse(localStorage.getItem("wishlist")) ?? [];
+let user_details;
 
 const url = window.location.search; // ?name=Arun
 const urlParams = new URLSearchParams(url); // converting string into key value pair
 const product_id = Number(urlParams.get("id")); // return value of the "name" key
 const product_cat = urlParams.get("cat");
+
+
+try {
+
+	startSpinner();
+
+	if (logged_email) {
+
+		user_details = await findUserRecordByEmail(logged_email);
+
+	}
+} catch (error) {
+
+	handleGenericError(error);
+} finally {
+
+	endSpinner();
+
+}
 
 // start of left side
 let indv_product_left_side_div;
@@ -445,7 +466,7 @@ function show_indv(obj) {
 	// favourite list
 
 	favorite_i.addEventListener("click", () => {
-		add_fav(JSON.stringify(item));
+		add_fav(item.id);
 	});
 
 	// add to cart event listner
@@ -471,63 +492,57 @@ const rel_products = product_details.filter((rel) => {
 endSpinner();
 list_products(rel_products);
 
-let wishlist_check = true;
 
-function add_fav(item) {
-	const par = JSON.parse(item);
+async function add_fav(id) {
 
-	if (user_id !== undefined) {
-		wishlist_check = true;
+	try {
 
-		check_in_wishlist(item);
-	} else {
-		wishlist_check = false;
+		if (logged_email) {
 
-		Notify.error("Please login to add product to wishlist");
+			const currentTimestamp = Date.now();
+			const seconds = Math.floor(currentTimestamp / 1000); // Convert milliseconds to seconds
+			const wishlist_item_id = `${user_details.id}_${currentTimestamp}_${seconds}`;
 
-		return wishlist_check;
-	}
 
-	if (wishlist_check) {
-		favourite_list.push({
-			user_id,
-			wishlist_item_id: generateRandomUserID(),
-			product_id: par.id,
-			category: par.category,
-			product_eng_name: par.name.eng,
-			product_image: par.image,
-			quantity: par.quantity,
-			product_added_date: new Date().toLocaleDateString(),
-			product_added_time: new Date().toLocaleTimeString(),
-		});
+			const obj = {
 
-		localStorage.setItem("wishlist", JSON.stringify(favourite_list));
+				wishlist_item_id: wishlist_item_id,
+				user_id: user_details.id,
+				productID: id,
+				product_added_date: new Date().toLocaleDateString(),
+				product_added_time: new Date().toLocaleTimeString()
+			};
 
-		Notify.success("Added to Wishlist");
+			startSpinner();
 
-		wishlist_count_fun();
-	}
+			const response = await axios.post(wishlistServlet + "?action=add&item=" + encodeURIComponent(JSON.stringify(obj)));
 
-	return wishlist_check;
-}
+			const msg = response.data.trim();
 
-function check_in_wishlist(item) {
-	const par = JSON.parse(item);
+			if (msg == "success") {
 
-	const fav_list = JSON.parse(localStorage.getItem("wishlist"));
+				Notify.success("Product added to wishlist successfully.");
 
-	if (fav_list !== null) {
-		fav_list.find((obj) => {
-			if (user_id === obj.user_id) {
-				if (par.id === obj.product_id) {
-					wishlist_check = false;
+				wishlist_count_fun();
 
-					Notify.error("Product was already added to wishlist");
+			} else {
 
-					return wishlist_check;
-				}
+				Notify.error(msg);
 			}
-			return false;
-		});
+
+
+		} else {
+			Notify.error("Please login to add product to wishlist");
+
+		}
+	} catch (error) {
+
+		handleGenericError(error);
+	} finally {
+
+		endSpinner();
 	}
+
 }
+
+

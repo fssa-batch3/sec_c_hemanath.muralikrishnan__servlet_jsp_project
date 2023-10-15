@@ -1,144 +1,285 @@
-const order_histroy = JSON.parse(localStorage.getItem("order_histroy"));
-console.log(order_histroy);
-function check_user_histroy() {
-  let check_histroy = false;
+import { handleGenericError } from "./handelerrors.js";
+import { logged_email, findUserRecordByEmail } from "./is_logged.js";
+import { startSpinner, endSpinner } from "./loading.js";
+import { getBaseUrlFromCurrentPage } from "./getUrl.js";
+import { Notify } from "./vendor/notify.js";
 
-  if (order_histroy !== null) {
-    order_histroy.find((obj) => {
-      if (user_id === obj.user_id) {
-        check_histroy = true;
-      }
+const readAllServlet = getBaseUrlFromCurrentPage() + "/ReadAllProductServlet";
+const orderServlet = getBaseUrlFromCurrentPage() + "/OrderCRUD";
+let user_profile;
+let product_details;
+let order_history;
 
-      return check_histroy;
-    });
 
-    show_histroy(check_histroy);
-  } else {
-    show_histroy(check_histroy);
-  }
+async function main() {
+	if (logged_email) {
+		try {
+			startSpinner();
+			user_profile = await findUserRecordByEmail(logged_email);
+			const orderResponse = await axios.post(orderServlet + "?action=readAll&id=" + user_profile.id);
+			order_history = orderResponse.data;
+			const response = await axios.get(readAllServlet);
+			product_details = response.data;
+			show_histroy(order_history);
+		} catch (error) {
+			handleGenericError(error);
+		} finally {
+			endSpinner();
+		}
+	} else {
+
+		window.location.href = getBaseUrlFromCurrentPage() + "/pages/error/error_page.jsp?error=401&msg= User is not authenticated, Unauthorized access."
+	}
 }
 
-function show_histroy(check_histroy) {
-  if (check_histroy) {
-    order_histroy.forEach((obj) => {
-      if (user_id === obj.user_id) {
-        append_histroy(obj);
-      }
-    });
-  } else {
-    document.querySelector(
-      ".container_card"
-    ).innerHTML = `<h1>No order histroy</h1>`;
-  }
+main();
+
+startSpinner();
+
+const main_history = document.querySelector(".table__body");
+const history_title = document.querySelector(".history-title");
+const append_history_td = document.querySelector(".append_order_history");
+const show_order_details = document.querySelector(".order_details_popup");
+const append_order_details = document.querySelector(".order_details_body");
+const close_popup = document.querySelector(".popup_close");
+const show_address = document.querySelector(".delv_address");
+const show_payment_method = document.querySelector(".show_payment_method");
+const show_status = document.querySelector(".payment_status");
+
+endSpinner();
+
+
+function show_histroy(history) {
+
+	startSpinner();
+
+	if (history.length != 0) {
+
+		append_history(history);
+
+
+	} else {
+		main_history.style.display = "none";
+		history_title.innerHTML = "No order items found";
+		history_title.style.marginBottom = "12em";
+	}
+
+	endSpinner();
 }
 
-function append_histroy(obj) {
-  const main_contianer = document.createElement("div");
-  main_contianer.setAttribute("class", "main-container");
-  document.querySelector(".container_card").appendChild(main_contianer);
 
-  const head_div = document.createElement("div");
-  head_div.setAttribute("class", "head");
-  head_div.innerHTML = `<p>${obj.order_histroy.length} products</p>
-      <p>₹${obj.total_amount}</p>
-      <p>Processing</p>`;
-  main_contianer.appendChild(head_div);
+function append_history(array = []) {
 
-  const when_coming = document.createElement("p");
-  when_coming.innerHTML = `${obj.which_day}`;
-  head_div.appendChild(when_coming);
+	append_history_td.innerHTML = "";
 
-  const angle_down = document.createElement("div");
-  angle_down.setAttribute("class", "fas fa-angle-down arrow");
-  head_div.appendChild(angle_down);
+	console.log(array);
 
-  const demo_p = document.createElement("p");
-  demo_p.setAttribute("class", "order_deliver");
-  demo_p.innerHTML = `<b>Delivery Addresss:</b> ${obj.delivery_address.street} ${obj.delivery_address.district} ${obj.delivery_address.state} ${obj.delivery_address.pincode}`;
-  main_contianer.append(demo_p);
+	let count = 1;
 
-  const other_contents = document.createElement("div");
-  other_contents.setAttribute("class", "other-contents");
-  main_contianer.appendChild(other_contents);
+	array.forEach(obj => {
 
-  const ord_histroy = obj.order_histroy;
+		const tr = document.createElement("tr");
 
-  ord_histroy.forEach((his_data) => {
-    const many_contents = document.createElement("div");
-    many_contents.setAttribute("class", "many_contents");
-    other_contents.appendChild(many_contents);
+		const sn = document.createElement("td");
+		sn.innerHTML = `${count}`;
+		tr.appendChild(sn);
 
-    const many_images = document.createElement("div");
-    many_images.setAttribute("class", "many_images");
-    many_contents.appendChild(many_images);
+		const view = document.createElement("td");
+		const icon = document.createElement("i");
+		icon.className = "fa-solid fa-eye";
+		icon.onclick = () => showDetails(obj.uniqueId);
+		view.appendChild(icon);
+		tr.appendChild(view);
 
-    const many_img = document.createElement("img");
-    many_img.setAttribute("src", `${his_data.product_details.image.source}`);
-    many_img.setAttribute(
-      "alt",
-      `image of ${his_data.product_details.image.alt}`
-    );
-    many_images.appendChild(many_img);
+		const getDate = new Date(obj.orderCreationDateTime);
 
-    const p_name = document.createElement("p");
-    p_name.innerHTML = `${his_data.product_details.name.eng}`;
-    many_images.appendChild(p_name);
+		const date = document.createElement("td");
+		date.innerHTML = `${getDate.toLocaleDateString()}`;
+		tr.appendChild(date);
 
-    const p_qty = document.createElement("p");
-    p_qty.innerHTML = `<b>Qty:</b> ${his_data.product_details.selected_qty.qty} ${his_data.product_details.selected_qty.unit}`;
-    many_images.appendChild(p_qty);
+		const total_products = document.createElement("td");
+		total_products.innerHTML = `${obj.totalProducts}`;
+		tr.appendChild(total_products);
 
-    const total_qty = document.createElement("p");
-    many_contents.appendChild(total_qty);
+		const total_amount = document.createElement("td");
+		total_amount.innerHTML = `₹ ${obj.totalAmount}`;
+		tr.appendChild(total_amount);
 
-    if (his_data.product_details.selected_qty.unit === "kg") {
-      total_qty.innerHTML = `${(
-        his_data.product_details.selected_qty.qty * his_data.quantity
-      ).toFixed(1)} kg`;
-    }
+		const status_td = document.createElement("td");
 
-    if (his_data.product_details.selected_qty.unit === "gm") {
-      if (
-        his_data.product_details.selected_qty.qty * his_data.quantity <
-        1000
-      ) {
-        total_qty.innerHTML = `${
-          his_data.product_details.selected_qty.qty * his_data.quantity
-        } gm`;
-      } else if (
-        his_data.product_details.selected_qty.qty * his_data.quantity >=
-        1000
-      ) {
-        total_qty.innerHTML = `${
-          (his_data.product_details.selected_qty.qty * his_data.quantity) / 1000
-        } kg`;
-      }
-    }
+		const status_p = document.createElement("p");
 
-    if (his_data.product_details.selected_qty.unit === "nos") {
-      total_qty.innerHTML = `${his_data.quantity} nos`;
-    }
+		if (obj.orderStatus == "PENDING") {
+			status_p.setAttribute("class", "status pending");
+			status_p.innerHTML = "Pending";
+		} else {
+			status_p.setAttribute("class", "status cancelled");
+			status_p.innerHTML = "Cancelled";
+		}
 
-    if (his_data.product_details.selected_qty.unit === "pkt") {
-      total_qty.innerHTML = `${his_data.quantity} pkt`;
-    }
+		status_td.appendChild(status_p);
+		tr.appendChild(status_td);
 
-    const p_unit_price = document.createElement("p");
-    p_unit_price.innerHTML = `₹ ${his_data.product_details.selected_qty.rs}`;
-    many_contents.appendChild(p_unit_price);
-  });
+		const cancel_td = document.createElement("td");
 
-  head_div.addEventListener("click", () => {
-    if (other_contents.style.display === "none") {
-      other_contents.style.display = "block";
-      angle_down.classList.remove("fa-angle-down");
-      angle_down.classList.add("fa-angle-up");
-    } else {
-      other_contents.style.display = "none";
-      angle_down.classList.remove("fa-angle-up");
-      angle_down.classList.add("fa-angle-down");
-    }
-  });
+		if (obj.orderCancelled) {
+			cancel_td.innerHTML = "Cancelled";
+		} else {
+			const icon = document.createElement("i");
+			icon.className = "fa-solid fa-xmark";
+			icon.onclick = () => cancelOrder(obj.uniqueId, obj.userId);
+			cancel_td.appendChild(icon);
+		}
+		tr.appendChild(cancel_td);
+
+
+		append_history_td.appendChild(tr);
+		count++;
+	});
+
 }
 
-check_user_histroy();
+function showDetails(id) {
+
+	startSpinner();
+
+	let count = 1;
+
+	append_order_details.innerHTML = "";
+
+
+	show_order_details.style.display = "block";
+
+	const findOrder = order_history.find(obj => obj.uniqueId == id);
+
+	show_address.innerHTML = `${findOrder.userAddress}`;
+
+	show_payment_method.innerHTML = `${findOrder.paymentMethod.replace(/_/g, ' ')}`;
+
+	if (findOrder.paymentMethod == "ONLINE_MODE") {
+
+		show_status.innerHTML = "Paid";
+	} else {
+
+		show_status.innerHTML = "Not paid";
+	}
+
+	findOrder.orderItems.forEach(item => {
+
+		const product = product_details.find(obj => obj.id == item.productId);
+
+		const qtyObj = product.quantities.find(obj => obj.id == item.qtyId);
+
+
+		const tr = document.createElement("tr");
+
+		const sn = document.createElement("td");
+		sn.innerHTML = `${count}`;
+		tr.appendChild(sn);
+
+		const tdImg = document.createElement("td");
+		const imgtag = document.createElement("img");
+		imgtag.setAttribute("src", `${product.imageUrl}`);
+		imgtag.setAttribute("alt", `${product.name.englishName}`);
+		tdImg.appendChild(imgtag);
+		tr.appendChild(tdImg);
+
+		const tdName = document.createElement("td");
+		tdName.innerHTML = `${product.name.englishName}`;
+		tr.appendChild(tdName);
+
+		const tdSelected = document.createElement("td");
+		tdSelected.innerHTML = `${qtyObj.weight} ${qtyObj.unit}`
+		tr.appendChild(tdSelected);
+
+		const tdSelectedRs = document.createElement("td");
+		tdSelectedRs.innerHTML = `₹ ${qtyObj.rs}`;
+		tr.appendChild(tdSelectedRs);
+
+		const reqQty = document.createElement("td");
+		reqQty.innerHTML = `${calculateTotalQuantity(qtyObj.weight, item.qtyNos, qtyObj.unit)}`;
+		tr.appendChild(reqQty);
+
+		const reqTotal = document.createElement("td");
+		reqTotal.innerHTML = `₹ ${qtyObj.rs * item.qtyNos}`;
+		tr.appendChild(reqTotal);
+
+		append_order_details.appendChild(tr);
+
+		count++;
+
+	});
+
+	endSpinner();
+}
+
+function calculateTotalQuantity(selectedQty, quantity, unit) {
+	if (unit === "KG") {
+		return `${(selectedQty * quantity).toFixed(1)} kg`;
+	}
+
+	if (unit === "GM") {
+		if (selectedQty * quantity < 1000) {
+			return `${selectedQty * quantity} gm`;
+		} else if (selectedQty * quantity >= 1000) {
+			return `${(selectedQty * quantity) / 1000} kg`;
+		}
+	}
+
+	if (unit === "NOS") {
+		return `${quantity} nos`;
+	}
+
+	if (unit === "PKT") {
+		return `${quantity} pkt`;
+	}
+
+	return "Invalid unit"; // Handle the case when the unit is not recognized.
+}
+
+close_popup.addEventListener('click', () => {
+
+	show_order_details.style.display = "none";
+
+});
+
+async function cancelOrder(orderId, userId) {
+
+	try {
+
+		const confirmation = window.confirm("Are you sure you want to cancel this order?");
+
+		if (confirmation) {
+
+			startSpinner();
+
+			const response = await axios.post(orderServlet + "?action=cancel&orderId=" + orderId + "&userId=" + userId);
+
+			if (response.data.trim() == "success") {
+
+				Notify.success("Order successfully cancelled");
+				const orderResponse = await axios.post(orderServlet + "?action=readAll&id=" + user_profile.id);
+				order_history = orderResponse.data;
+				show_histroy(order_history);
+			} else {
+				handleGenericError(response.data.trim());
+
+			}
+
+		} else {
+
+			handleGenericError("Cancelled");
+		}
+
+	} catch (error) {
+
+		handleGenericError(error);
+	} finally {
+
+		endSpinner();
+	}
+
+}
+
+
+

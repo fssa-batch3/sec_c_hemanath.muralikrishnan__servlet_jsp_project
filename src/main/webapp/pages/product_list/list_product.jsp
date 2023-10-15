@@ -89,7 +89,9 @@
 			<li><i class="fa-solid fa-house"></i></li>
 			<li><a href="<%=request.getContextPath()%>/index.jsp">Home</a></li>
 			<li><i class="fa-solid fa-angle-right"></i></li>
-			<li>Browse Products</li>
+			<li><a
+				href="<%=request.getContextPath()%>/pages/product_list/list_product.jsp?cat=00">Browse
+					Products</a></li>
 
 		</ul>
 
@@ -103,7 +105,7 @@
 
 		<div id="list1" class="dropdown-check-list" tabindex="100">
 
-			<span class="anchor" id="mobile_filter">Filter by category â¾</span>
+			<span class="anchor" id="mobile_filter">Filter by category ▽</span>
 
 			<ul class="items">
 				<li><input type="checkbox" id="mobile_exotic_fruit"
@@ -128,7 +130,7 @@
 
 		<div id="list2" class="dropdown-check-list" tabindex="100">
 
-			<span class="anchor" id="mobile_sort_by">Sort by options â¾</span>
+			<span class="anchor" id="mobile_sort_by">Sort by options ▽</span>
 
 			<ul class="sort-items">
 				<li><input type="radio" id="mobile_name_a_to_z"

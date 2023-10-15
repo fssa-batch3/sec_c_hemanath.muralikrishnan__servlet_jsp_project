@@ -84,9 +84,10 @@
 			<li><i class="fa-solid fa-house"></i></li>
 			<li><a href="<%=request.getContextPath()%>/index.jsp">Home</a></li>
 			<li><i class="fa-solid fa-angle-right"></i></li>
-			<li>Shop</li>
+			<li><a
+				href="<%=request.getContextPath()%>/pages/product_list/list_product.jsp?cat=00">Shop</a></li>
 			<li><i class="fa-solid fa-angle-right"></i></li>
-			<li>Cart</li>
+			<li><a href="<%=request.getContextPath()%>/pages/cart.jsp">Cart</a></li>
 
 		</ul>
 
@@ -127,7 +128,8 @@
 
 		<div class="cart-continue-btn">
 			<a
-				href="<%=request.getContextPath()%>/pages/product_list/list_product.jsp?cat=00">Continue Shopping</a>
+				href="<%=request.getContextPath()%>/pages/product_list/list_product.jsp?cat=00">Continue
+				Shopping</a>
 		</div>
 
 		<div class="show-total-elem">
@@ -135,7 +137,7 @@
 			<p class="cart-total"></p>
 
 			<a href="<%=request.getContextPath()%>/pages/order/place_order.jsp"
-				class="checkout-btn">Checkout</a>
+				class="checkout-btn">CheckOut</a>
 		</div>
 
 	</div>

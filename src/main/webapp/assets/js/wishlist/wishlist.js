@@ -1,142 +1,190 @@
+import { getBaseUrlFromCurrentPage } from "../getUrl.js";
+import { handleGenericError } from "../handelerrors.js";
+import { logged_email } from "../is_logged.js";
+import { endSpinner, startSpinner } from "../loading.js";
 import { Notify } from "../vendor/notify.js";
 import { wishlist_count_fun } from "./wishlist_count.js";
 
 // getting the element to append the div
 const appen_div = document.querySelector(".wishlist-cont");
-
-// from localstorage get the favourite list
-
-const wishlist = JSON.parse(localStorage.getItem("wishlist"));
-
-// element to display the number of wishlist products available
-
 const wish_title = document.getElementById("wish-title");
+const wishlistServlet = getBaseUrlFromCurrentPage() + "/WishlistCRUD";
+const readAllServlet = getBaseUrlFromCurrentPage() + "/ReadAllProductServlet";
 
-function check_wishlist() {
-  let user_pro_check = false;
+let wishlist;
+let products;
 
-  if (wishlist !== null) {
-    wishlist.find((obj) => {
-      if (user_id === obj.user_id) {
-        user_pro_check = true;
-      }
+async function show_the_wishlist() {
 
-      return user_pro_check;
-    });
+	if (logged_email) {
 
-    show_the_wishlist_pro(user_pro_check);
-  } else {
-    show_the_wishlist_pro(user_pro_check);
-  }
+
+		try {
+
+			startSpinner();
+			const proRes = await axios.get(readAllServlet);
+			products = proRes.data;
+			const proWish = await axios.post(wishlistServlet + "?action=readAll");
+			wishlist = proWish.data;
+			wish_title.innerText = `My Wishlist(${wishlist.length})`;
+			if (wishlist.length != 0) {
+				wish_list(wishlist);
+			} else {
+				appen_div.innerHTML = `<p class="no-wishlist-pro">No favourite products found</p>`;
+			}
+
+		} catch (error) {
+
+			handleGenericError(error);
+		} finally {
+
+			endSpinner();
+		}
+
+	} else {
+		wish_title.innerText = `My Wishlist(0)`;
+		appen_div.innerHTML = `<p class="no-wishlist-pro">No favourite products found</p>`;
+	}
+
+	// my title count increasing
+
 }
 
-function show_the_wishlist_pro(user_pro_check) {
-  let wish_pro_count = 0;
+await show_the_wishlist();
 
-  if (user_pro_check) {
-    wishlist.filter((obj, index) => {
-      if (user_id === obj.user_id) {
-        wish_list(obj, index);
-        wish_pro_count++;
-        return true;
-      }
-      return false;
-    });
-  } else {
-    appen_div.innerHTML = `<p class="no-wishlist-pro">No favourite products</p>`;
-  }
+function wish_list(array = []) {
 
-  // my title count increasing
+	appen_div.innerHTML = "";
 
-  wish_title.innerText = `My Wishlist(${wish_pro_count})`;
+	array.forEach(item => {
+
+
+		const findPro = products.find(obj => obj.id == item.productID);
+
+		const href_link = getBaseUrlFromCurrentPage() + `/pages/product_details/details.jsp?` +
+			`id=${findPro.id}&` +
+			`cat=${findPro.category}`;
+
+		const wishlistSec = document.createElement("div");
+		wishlistSec.classList.add("wishlist-sec");
+
+		const wishlistContent = document.createElement("div");
+		wishlistContent.classList.add("wishlist-content");
+
+
+		const wishlistProImage = document.createElement("div");
+		wishlistProImage.classList.add("wishlist-pro-image");
+
+		const aLink = document.createElement("a");
+
+		if (findPro.status == "AVAILABLE") {
+
+			aLink.href = href_link;
+		} else {
+
+			aLink.href = "#";
+		}
+
+
+
+		const wishlistImg = document.createElement("img");
+		wishlistImg.src = findPro.imageUrl;
+		wishlistImg.alt = `image of ${findPro.name.englishName}`;
+
+		aLink.appendChild(wishlistImg);
+		wishlistProImage.appendChild(aLink);
+
+		const wishlistText = document.createElement("div");
+		wishlistText.classList.add("wishlist-text");
+
+		const wishProTitle = document.createElement("p");
+		wishProTitle.classList.add("wish-pro-title");
+		wishProTitle.innerText = findPro.name.englishName;
+
+		const wishCat = document.createElement("p");
+		wishCat.classList.add("wish-cat");
+		wishCat.innerText = findPro.category.replace(/_/g, ' ');
+
+		const wishlistQuantity = document.createElement("div");
+		wishlistQuantity.classList.add("wishlist-quantity");
+
+		const quantity = document.createElement("p");
+		quantity.innerHTML = `<b>Qty:</b> ${findPro.quantities[0].weight} ${findPro.quantities[0].unit}`;
+
+		const wishPrice = document.createElement("p");
+		wishPrice.classList.add("wish-price");
+		wishPrice.innerText = `₹ ${findPro.quantities[0].rs}`;
+
+		wishlistQuantity.appendChild(quantity);
+		wishlistQuantity.appendChild(wishPrice);
+
+		wishlistText.appendChild(wishProTitle);
+		wishlistText.appendChild(wishCat);
+		wishlistText.appendChild(wishlistQuantity);
+
+		const iconDel = document.createElement("div");
+		iconDel.classList.add("icon-del");
+
+		const delIcon = document.createElement("i");
+		delIcon.classList.add("fa-solid", "fa-trash");
+		delIcon.onclick = () => deletewishlist(item.productID);
+
+		iconDel.appendChild(delIcon);
+
+		wishlistContent.appendChild(wishlistProImage);
+		wishlistContent.appendChild(wishlistText);
+
+		wishlistSec.appendChild(wishlistContent);
+
+		wishlistSec.appendChild(iconDel);
+
+		appen_div.appendChild(wishlistSec);
+
+	});
+
+
 }
 
-function wish_list(item, index) {
-  const { product_id } = item;
-  const product_cat = item.category.id;
+async function deletewishlist(id) {
 
-  const href_link =
-    `product_details/details.html?` +
-    `id=${product_id}&` +
-    `cat=${product_cat}`;
+	try {
 
-  const wishlistSec = document.createElement("div");
-  wishlistSec.classList.add("wishlist-sec");
+		const confirmation = window.confirm("Are you sure you want to remove the product from wishlist");
 
-  const wishlistContent = document.createElement("div");
-  wishlistContent.classList.add("wishlist-content");
+		if (confirmation) {
 
-  const wishlistProImage = document.createElement("div");
-  wishlistProImage.classList.add("wishlist-pro-image");
+			startSpinner();
 
-  const aLink = document.createElement("a");
-  aLink.href = href_link;
+			const response = await axios.post(wishlistServlet + "?action=delete&productID=" + id);
 
-  const wishlistImg = document.createElement("img");
-  wishlistImg.src = item.product_image.source;
-  wishlistImg.alt = `image of ${item.product_image.alt}`;
+			if (response.data.trim() == "success") {
 
-  aLink.appendChild(wishlistImg);
-  wishlistProImage.appendChild(aLink);
+				Notify.success("Product removed from wishlist");
 
-  const wishlistText = document.createElement("div");
-  wishlistText.classList.add("wishlist-text");
+				const proWish = await axios.post(wishlistServlet + "?action=readAll");
+				wishlist = proWish.data;
+				wish_title.innerText = `My Wishlist(${wishlist.length})`;
+				wishlist_count_fun();
+				if (wishlist.length != 0) {
+					wish_list(wishlist);
+				} else {
+					appen_div.innerHTML = `<p class="no-wishlist-pro">No favourite products found</p>`;
+				}
+			}
 
-  const wishProTitle = document.createElement("p");
-  wishProTitle.classList.add("wish-pro-title");
-  wishProTitle.innerText = item.product_eng_name;
 
-  const wishCat = document.createElement("p");
-  wishCat.classList.add("wish-cat");
-  wishCat.innerText = item.category.name;
+		} else {
 
-  const wishlistQuantity = document.createElement("div");
-  wishlistQuantity.classList.add("wishlist-quantity");
+			Notify.error("Cancelled");
+		}
 
-  const quantity = document.createElement("p");
-  quantity.innerHTML = `<b>Qty:</b> ${item.quantity[0].qty}`;
 
-  const wishPrice = document.createElement("p");
-  wishPrice.classList.add("wish-price");
-  wishPrice.innerText = `₹ ${item.quantity[0].rs}`;
+	} catch (error) {
 
-  wishlistQuantity.appendChild(quantity);
-  wishlistQuantity.appendChild(wishPrice);
 
-  wishlistText.appendChild(wishProTitle);
-  wishlistText.appendChild(wishCat);
-  wishlistText.appendChild(wishlistQuantity);
+	} finally {
 
-  const iconDel = document.createElement("div");
-  iconDel.classList.add("icon-del");
-
-  const delIcon = document.createElement("i");
-  delIcon.classList.add("fa-solid", "fa-trash");
-  delIcon.onclick = () => deletewishlist(index);
-
-  iconDel.appendChild(delIcon);
-
-  wishlistContent.appendChild(wishlistProImage);
-  wishlistContent.appendChild(wishlistText);
-
-  wishlistSec.appendChild(wishlistContent);
-  wishlistSec.appendChild(iconDel);
-
-  appen_div.appendChild(wishlistSec);
+		endSpinner();
+	}
 }
 
-function deletewishlist(index) {
-  wishlist.splice(index, 1);
-
-  localStorage.setItem("wishlist", JSON.stringify(wishlist));
-
-  Notify.success("Product Removed");
-
-  appen_div.innerHTML = "";
-
-  check_wishlist();
-
-  wishlist_count_fun();
-}
-
-check_wishlist();

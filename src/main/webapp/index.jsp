@@ -119,7 +119,7 @@
 					src="<%=request.getContextPath()%>/assets/images/categories/fresh_fruits.png"
 					alt="fresh_fruits">
 					<p>Fresh Fruits</p>
-					<p>16 Products</p>
+					<p class="fresh_fruits"></p>
 				</a>
 			</div>
 
@@ -130,7 +130,7 @@
 					src="<%=request.getContextPath()%>/assets/images/categories/exotic_fruits.png"
 					alt="exotic_fruits">
 					<p>Exotic Fruits</p>
-					<p>7 Products</p>
+					<p class="exotic_fruits"></p>
 				</a>
 			</div>
 
@@ -141,7 +141,7 @@
 					src="<%=request.getContextPath()%>/assets/images/categories/fresh_veggies.png"
 					alt="fresh_veggies">
 					<p>Fresh Veggies</p>
-					<p>15 Products</p>
+					<p class="fresh_veggies"></p>
 				</a>
 			</div>
 
@@ -152,7 +152,7 @@
 					src="<%=request.getContextPath()%>/assets/images/categories/exotic_veggies.png"
 					alt="exotic_veggies">
 					<p>Exotic Veggies</p>
-					<p>15 Products</p>
+					<p class="exotic_veggies"></p>
 				</a>
 			</div>
 
@@ -163,7 +163,7 @@
 					src="<%=request.getContextPath()%>/assets/images/categories/leafy_green.png"
 					alt="leafy_green">
 					<p>Leafy Green</p>
-					<p>18 Products</p>
+					<p class="leafy_green"></p>
 				</a>
 			</div>
 
@@ -174,7 +174,7 @@
 					src="<%=request.getContextPath()%>/assets/images/categories/tubers.png"
 					alt="tubers">
 					<p>Tubers</p>
-					<p>5 Products</p>
+					<p class="tubers"></p>
 				</a>
 			</div>
 

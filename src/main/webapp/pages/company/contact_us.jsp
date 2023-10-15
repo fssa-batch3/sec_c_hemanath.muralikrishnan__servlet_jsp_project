@@ -79,7 +79,9 @@
 			<li><i class="fa-solid fa-house"></i></li>
 			<li><a href="<%=request.getContextPath()%>/index.jsp">Home</a></li>
 			<li><i class="fa-solid fa-angle-right"></i></li>
-			<li>Contact Us</li>
+			<li><a
+				href="<%=request.getContextPath()%>/pages/company/contact_us.jsp">Contact
+					Us</</li>
 
 		</ul>
 

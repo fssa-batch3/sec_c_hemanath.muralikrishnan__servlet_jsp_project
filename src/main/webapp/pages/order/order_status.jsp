@@ -82,6 +82,9 @@
 	<script type="module"
 		src="<%=request.getContextPath()%>/assets/js/is_logged.js"></script>
 
+	<script type="module"
+		src="<%=request.getContextPath()%>/assets/js/order_status.js"></script>
+
 	<!-- wishlist count -->
 
 	<script type="module"
@@ -92,9 +95,7 @@
 	<script type="module"
 		src="<%=request.getContextPath()%>/assets/js/cart_count.js"></script>
 
-	<!-- this page script -->
 
-	<script type="module"
-		src="<%=request.getContextPath()%>/assets/js/order_status.js"></script>
+
 </body>
 </html>

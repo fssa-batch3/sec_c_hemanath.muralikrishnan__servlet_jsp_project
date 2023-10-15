@@ -21,6 +21,8 @@
 	type="text/css">
 <!-- body stylesheet -->
 
+<link rel="stylesheet" href="../../assets/css/notify.css">
+
 <!-- footer stylesheet -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/assets/css/base_style/footer.css"
@@ -59,23 +61,78 @@
 			<li><i class="fa-solid fa-house"></i></li>
 			<li><a href="<%=request.getContextPath()%>/index.jsp">Home</a></li>
 			<li><i class="fa-solid fa-angle-right"></i></li>
-			<li>My Account</li>
+			<li><a href="<%=request.getContextPath()%>/pages/profile.jsp">My
+					Account</a></li>
 			<li><i class="fa-solid fa-angle-right"></i></li>
-			<li>Orders</li>
+			<li><a
+				href="<%=request.getContextPath()%>/pages/order/order_histroy.jsp">Order</a></li>
 
 		</ul>
 
 	</div>
 	<!-- end of list top -->
 
-	<div class="container_card">
+	<p class="history-title">Order History</p>
 
-		<p class="history-title">Order history</p>
 
+	<section class="table__body">
+		<table>
+			<thead>
+				<tr>
+					<th>S.No</th>
+					<th>View Order</th>
+					<th>Order Date</th>
+					<th>Total Products</th>
+					<th>Total Amount</th>
+					<th>Order Status</th>
+					<th>Cancel Order</th>
+				</tr>
+			</thead>
+			<tbody class="append_order_history">
+			</tbody>
+		</table>
+	</section>
+
+	<div class="order_details_popup">
+		<div class="modal">
+			<div class="modal-content">
+				<span class="close popup_close">&times;</span>
+				<h2>Order Details</h2>
+				<div class="order-details">
+					<h3>Address</h3>
+					<p class="delv_address"></p>
+					<h3>Payment Mode</h3>
+					<p class="show_payment_method"></p>
+					<h3>Payment Status</h3>
+					<p class="payment_status"></p>
+				</div>
+				<div class="table-container">
+					<table class="order-items">
+						<thead>
+							<tr>
+								<th>S.No</th>
+								<th>Image</th>
+								<th>Name</th>
+								<th>Selected Quantity</th>
+								<th>Unit Price</th>
+								<th>Order Quantity</th>
+								<th>Total Price</th>
+							</tr>
+						</thead>
+						<tbody class="order_details_body">
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 	</div>
 
-	<!-- logged check js -->
 
+
+
+
+	<!-- logged check js -->
 	<script type="module"
 		src="<%=request.getContextPath()%>/assets/js/is_logged.js"></script>
 
@@ -93,6 +150,7 @@
 
 	<script type="module"
 		src="<%=request.getContextPath()%>/assets/js/order_histroy.js"></script>
+
 
 </body>
 </html>

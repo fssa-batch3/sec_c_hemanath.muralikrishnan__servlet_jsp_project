@@ -45,6 +45,8 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/assets/css/loading.css">
 
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 <title>AgroKart - Ecommerce</title>
 </head>
 
@@ -77,15 +79,15 @@
 					<div class="dates-cont">
 
 						<div class="dates">
-							<input type="radio" name="select_date" id="today" required
-								title="Please select delivery date"> <label for="today"
+							<input type="radio" name="select_date" id="TODAY" required
+								title="Please select delivery date"> <label for="TODAY"
 								id="today_label"></label>
 						</div>
 
 						<div class="dates">
-							<input type="radio" name="select_date" id="tomorrow" required
+							<input type="radio" name="select_date" id="TOMORROW" required
 								title="Please select delivery date"> <label
-								for="tomorrow" id="tomorrow_label"></label>
+								for="TOMORROW" id="tomorrow_label"></label>
 						</div>
 
 					</div>
@@ -162,6 +164,7 @@
 	<!-- footer ends -->
 
 	<!-- logged check js -->
+
 
 	<script type="module" src="../../assets/js/is_logged.js"></script>
 

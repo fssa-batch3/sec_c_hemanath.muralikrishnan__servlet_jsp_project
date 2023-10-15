@@ -21,7 +21,7 @@ import com.fssa.agrokart.util.ExceptionLoggerUtil;
  */
 @WebServlet("/CartCRUDServlet")
 public class CartServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+
 
 	private static final int CUST0M_STATUS_CODE = 600;
 
@@ -164,7 +164,6 @@ public class CartServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 
 				// Retrieve the user's cart from the session
-				@SuppressWarnings("unchecked")
 				List<Object> cart = (List<Object>) session.getAttribute("cart");
 				JSONArray cartArr = new JSONArray(cart);
 
@@ -201,6 +200,23 @@ public class CartServlet extends HttpServlet {
 				response.sendError(CUST0M_STATUS_CODE, "Failed to read cart size");
 			}
 
+		}
+
+		if ("clearAll".equals(action)) {
+			try {
+				// Get the user's session
+				HttpSession session = request.getSession();
+
+				// Remove the user's cart from the session to clear all items
+				session.removeAttribute("cart");
+
+				response.getWriter().write("success");
+
+			} catch (Exception e) {
+				// Handle exceptions and log them
+				ExceptionLoggerUtil.logException(e);
+				response.sendError(CUST0M_STATUS_CODE, "Failed to clear cart");
+			}
 		}
 
 	}

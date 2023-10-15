@@ -74,7 +74,8 @@
 			<li><i class="fa-solid fa-house"></i></li>
 			<li><a href="<%=request.getContextPath()%>/index.jsp">Home</a></li>
 			<li><i class="fa-solid fa-angle-right"></i></li>
-			<li>My Account</li>
+			<li><a href="<%=request.getContextPath()%>/pages/profile.jsp">My
+					Account</a></li>
 		</ul>
 
 	</div>

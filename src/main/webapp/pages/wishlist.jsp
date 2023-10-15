@@ -55,10 +55,15 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/assets/css/notify.css">
 
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/assets/css/loading.css">
+
 <title>AgroKart - Ecommerce</title>
 </head>
 
 <body>
+
+	<jsp:include page="loading.jsp"></jsp:include>
 
 	<!-- mobile device nav bar start -->
 
@@ -74,10 +79,9 @@
 
 		<ul>
 			<li><i class="fa-solid fa-house"></i></li>
-			<li><a href="<%=request.getContextPath()%>/index.jsp">Home</a>
-			</li>
+			<li><a href="<%=request.getContextPath()%>/index.jsp">Home</a></li>
 			<li><i class="fa-solid fa-angle-right"></i></li>
-			<li>Wishlist</li>
+			<li><a href="<%=request.getContextPath()%>/pages/wishlist.jsp">Wishlist</a></li>
 		</ul>
 
 	</div>

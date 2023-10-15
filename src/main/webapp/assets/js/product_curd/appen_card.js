@@ -414,17 +414,23 @@ async function get_cart_ele(id, no_qty) {
 
 				} else {
 
-					const avl_into_gram = productObj.availableStock.num * (selectedUnit == "KG" || selectedUnit == "GM" ? 1000 : 1);
-					const check = no_qty * (selectedUnit == "KG" ? selectedWeight * 1000 : selectedWeight);
+					if (!(no_qty <= 0)) {
 
-					if (!(check <= avl_into_gram)) {
+						const avl_into_gram = productObj.availableStock.num * (selectedUnit == "KG" || selectedUnit == "GM" ? 1000 : 1);
+						const check = no_qty * (selectedUnit == "KG" ? selectedWeight * 1000 : selectedWeight);
 
-						Notify.error("Cannot add product to the cart more than available stock.");
-					} else {
-						add_product_to_cart(id, selectedQty, no_qty, productObj.seller.id);
-						cart_count_fun();
+						if (!(check <= avl_into_gram)) {
+
+							Notify.error("Cannot add product to the cart more than available stock.");
+						} else {
+							add_product_to_cart(id, selectedQty, no_qty, productObj.seller.id);
+							cart_count_fun();
+						}
+
+					}else{
+						
+						Notify.error("Invalid quantity.");
 					}
-
 
 				}
 

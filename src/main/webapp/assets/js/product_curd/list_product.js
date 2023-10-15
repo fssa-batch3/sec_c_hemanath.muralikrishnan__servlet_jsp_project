@@ -11,25 +11,40 @@ const show_sort_by = document.querySelector(".sort-items");
 
 const readAllServlet = getBaseUrlFromCurrentPage() + "/ReadAllProductServlet";
 
-show_mobile_filter.style.display = "none";
 
+function toggleElementDisplay(element) {
+	if (element.style.display === "none") {
+		element.style.display = "block";
+	} else {
+		element.style.display = "none";
+	}
+}
+
+show_mobile_filter.style.display = "none";
 show_sort_by.style.display = "none";
 
-mobile_filter.addEventListener("click", () => {
-	if (show_mobile_filter.style.display === "none") {
-		show_mobile_filter.style.display = "block";
-	} else {
-		show_mobile_filter.style.display = "none";
-	}
+mobile_filter.addEventListener("click", (event) => {
+	event.stopPropagation();
+	toggleElementDisplay(show_mobile_filter);
 });
 
-mobile_sort_by.addEventListener("click", () => {
-	if (show_sort_by.style.display === "none") {
-		show_sort_by.style.display = "block";
-	} else {
+mobile_sort_by.addEventListener("click", (event) => {
+	event.stopPropagation();
+	toggleElementDisplay(show_sort_by);
+});
+
+window.addEventListener("click", (event) => {
+	if (show_mobile_filter.style.display === "block" && event.target !== mobile_filter) {
+		show_mobile_filter.style.display = "none";
+	}
+
+	if (show_sort_by.style.display === "block" && event.target !== mobile_sort_by) {
 		show_sort_by.style.display = "none";
 	}
 });
+
+
+
 
 let product_details;
 
@@ -230,7 +245,7 @@ function cost_high_to_low() {
 				.querySelector(".amount")
 				.innerHTML.split(" ");
 
-			if (Number(one_value[1]) > Number(two_value[1])) {
+			if (Number(one_value[1]) < Number(two_value[1])) {
 				shouldSwitch = true;
 
 				break;
@@ -273,7 +288,7 @@ function cost_low_to_hi() {
 				.querySelector(".amount")
 				.innerHTML.split(" ");
 
-			if (Number(one_value[1]) < Number(two_value[1])) {
+			if (Number(one_value[1]) > Number(two_value[1])) {
 				shouldSwitch = true;
 
 				break;

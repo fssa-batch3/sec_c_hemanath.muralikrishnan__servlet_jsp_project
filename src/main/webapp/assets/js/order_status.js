@@ -1,23 +1,8 @@
-import { cart_count_fun } from "./cart_count.js";
+import { getBaseUrlFromCurrentPage } from "./getUrl.js";
+import { logged_email } from "./is_logged.js";
 
-const cart_items = JSON.parse(localStorage.getItem("cart_items"));
 
-for (let i = 0; i < cart_items.length; i++) {
-  delete_cart_products();
+if (logged_email == null) {
 
-  cart_count_fun();
-}
-
-// to delete the cart items of the current user
-
-function delete_cart_products() {
-  const get_cart_items = JSON.parse(localStorage.getItem("cart_items"));
-
-  get_cart_items.forEach((item, index) => {
-    if (user_id === item.user_id) {
-      get_cart_items.splice(index, 1);
-
-      localStorage.setItem("cart_items", JSON.stringify(get_cart_items));
-    }
-  });
+	window.location.href = getBaseUrlFromCurrentPage() + "/pages/error/error_page.jsp?error=401&msg= User is not authenticated, Unauthorized access."
 }

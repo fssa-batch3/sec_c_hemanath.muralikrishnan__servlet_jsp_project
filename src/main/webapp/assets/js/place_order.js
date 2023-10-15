@@ -1,12 +1,15 @@
 import { getBaseUrlFromCurrentPage } from "./getUrl.js";
 import { handleGenericError } from "./handelerrors.js";
-import { logged_email, getCurrentUser, findUserRecordByEmail } from "./is_logged.js";
+import { logged_email, findUserRecordByEmail } from "./is_logged.js";
 import { startSpinner, endSpinner } from "./loading.js";
 import { Notify } from "./vendor/notify.js";
+import config from './config.js';
 
 const addressServlet = getBaseUrlFromCurrentPage() + "/UserAddress";
 const cartServlet = getBaseUrlFromCurrentPage() + "/CartCRUDServlet";
 const readAllServlet = getBaseUrlFromCurrentPage() + "/ReadAllProductServlet";
+const orderServlet = getBaseUrlFromCurrentPage() + "/OrderCRUD";
+const orderCreation = getBaseUrlFromCurrentPage() + "/RazorPayOrderCreation";
 
 let find_user_address;
 let product_details;
@@ -22,11 +25,13 @@ async function fetchDataFromAPI() {
 	}
 }
 
+let user_profile;
+
 async function main() {
 	if (logged_email) {
 		try {
 			startSpinner();
-			let user_profile = await findUserRecordByEmail(logged_email);
+			user_profile = await findUserRecordByEmail(logged_email);
 			const fullUrl = addressServlet + "?action=readAllAddress&userId=" + user_profile.id;
 			const response = await axios.post(fullUrl);
 			find_user_address = response.data;
@@ -39,6 +44,9 @@ async function main() {
 		} finally {
 			endSpinner();
 		}
+	} else {
+
+		window.location.href = getBaseUrlFromCurrentPage() + "/pages/error/error_page.jsp?error=401&msg= User is not authenticated, Unauthorized access."
 	}
 }
 
@@ -51,8 +59,8 @@ const now = new Date();
 const tomorrow = new Date(now);
 tomorrow.setDate(now.getDate() + 1);
 
-const today_input = document.getElementById("today");
-const tomorrow_input = document.getElementById("tomorrow");
+const today_input = document.getElementById("TODAY");
+const tomorrow_input = document.getElementById("TOMORROW");
 
 const today_label = document.getElementById("today_label");
 const tomorrow_label = document.getElementById("tomorrow_label");
@@ -69,7 +77,7 @@ tomorrow_input.value = `${tomorrow.toLocaleDateString()}`;
 if (find_user_address.length === 0) {
 	document.querySelector(
 		".append_available_address"
-	).innerHTML = `<a href='${getBaseUrlFromCurrentPage()}/pages/profile.jsp' class="place_order_address_add">Please add address in profile page to checkout</a > `;
+	).innerHTML = `<a href='${getBaseUrlFromCurrentPage()}/pages/profile.jsp#manage-add' class="place_order_address_add">Please add address in profile page to checkout</a > `;
 
 	Notify.error("please add address to proceed checkout");
 
@@ -223,69 +231,207 @@ if (total_rs_arr != null) {
 
 document.querySelector(".main-total").innerHTML = `Total: ₹ ${total} `;
 
-// place order full logic
 
-const order_array = [];
-
-get_place_order_form.addEventListener("submit", (e) => {
+get_place_order_form.addEventListener("submit", async (e) => {
 	e.preventDefault();
-
-	push_cart_to_order();
 
 	const get_date = document.querySelector(
 		'input[name="select_date"]:checked'
 	).value;
-	const get_day = document
-		.querySelector('input[name="select_date"]:checked')
-		.getAttribute("id");
 
-	const get_delivery_address = document
+	const selectedId = document
 		.querySelector('input[name="select_address"]:checked')
 		.getAttribute("id");
-	let delivery_address;
 
-	user_records.find((obj) => {
-		if (user_id === obj.user_id) {
-			const find_add = obj.address;
+	const addressObj = find_user_address.find(obj => obj.id == selectedId);
 
-			return find_add.find((address_obj) => {
-				if (get_delivery_address === address_obj.address_id) {
-					delivery_address = address_obj;
-					return true;
+	let finalAddress;
+
+	if (addressObj) {
+
+		finalAddress = `${addressObj.fullName}, ${addressObj.address}, ${addressObj.pincode}, ${addressObj.phoneNumber}`;
+	} else {
+
+		handleGenericError("Address not found");
+	}
+
+	const get_payment = document.querySelector('input[name="payment-type"]:checked').value;
+
+	if (checkProductWithData()) {
+		const amount = await getAmount();
+		if (get_payment == "cash_on_delivery") {
+
+			createOrder(amount, get_date, finalAddress, get_payment, null, user_profile.id);
+
+		} else {
+			try {
+				startSpinner();
+				const paymentid = await openCheckOut(amount);
+				if (paymentid) {
+					Notify.success("Payment Success");
+					createOrder(amount, get_date, finalAddress, get_payment, paymentid, user_profile.id);
 				}
+			} catch (error) {
+				handleGenericError(error);
+			} finally {
 
-				return null;
-			});
+				endSpinner();
+			}
 		}
-		return null;
-	});
+	} else {
+		Notify.error("Error while validating the order.");
+	}
 
-	const get_payment_type = document.querySelector(
-		'input[name="payment-type"]:checked'
-	).value;
-
-	const order_json = {
-		user_id,
-		delivery_address,
-		which_day: get_day,
-		which_date: get_date,
-		payment_type: get_payment_type,
-		payment_status: true,
-		order_histroy: order_array,
-		created_date: new Date().toLocaleDateString(),
-		created_time: new Date().toLocaleTimeString(),
-		total_amount: total,
-	};
-
-	order_histroy.push(order_json);
-
-	localStorage.setItem("order_histroy", JSON.stringify(order_histroy));
-
-	window.location.href = "order_status.html";
 });
 
-function push_cart_to_order() {
-	place_order_items
-		.filter((obj) => user_id === obj.user_id)
-		.forEach((obj) => order_array.push(obj));
+async function createOrder(amount, date, address, payment, payment_id, user_id) {
+
+	try {
+
+		startSpinner();
+
+		Notify.success("Placing Order please wait");
+
+		const getCartItems = await axios.post(cartServlet + "?action=readAll");
+
+		const params = new URLSearchParams();
+		params.append("action", "placeOrder");
+		params.append("item", JSON.stringify(getCartItems.data));
+		params.append("amount", amount);
+		params.append("date", date);
+		params.append("address", address);
+		params.append("payment", payment);
+		params.append("payment_id", payment_id);
+		params.append("user_id", user_id);
+
+		const fullUrl = `${orderServlet}?${params.toString()}`;
+
+		const result = await axios.post(fullUrl);
+
+		if (result.data.trim() == "success") {
+
+			Notify.success("Order placed successfully");
+
+			await axios.post(cartServlet + "?action=clearAll");
+
+			window.location.href = getBaseUrlFromCurrentPage() + "/pages/order/order_status.jsp";
+		}
+
+
+	} catch (error) {
+
+		console.log(error);
+		handleGenericError(error);
+
+	} finally {
+
+		endSpinner();
+	}
+
 }
+
+async function getAmount() {
+
+	try {
+		startSpinner();
+
+		const getCartItems = await axios.post(cartServlet + "?action=readAll");
+		const items = await axios.post(orderServlet + "?action=getRs&item=" + encodeURIComponent(JSON.stringify(getCartItems.data)));
+
+		if (items.data > 0) {
+
+
+			return items.data;
+		} else {
+
+			throw new error("Invalid rupees");
+		}
+
+	} catch (error) {
+		handleGenericError(error);
+	} finally {
+		endSpinner();
+	}
+
+}
+
+async function checkProductWithData() {
+	try {
+		startSpinner();
+
+		const getCartItems = await axios.post(cartServlet + "?action=readAll");
+		const items = await axios.post(orderServlet + "?action=validate&item=" + encodeURIComponent(JSON.stringify(getCartItems.data)));
+
+		if (items.data.trim() == "success") {
+
+			return true;
+		} else {
+
+			return false;
+		}
+
+	} catch (error) {
+		handleGenericError(error);
+	} finally {
+		endSpinner();
+	}
+}
+
+async function CreateOrderId(amount) {
+	try {
+		const response = await axios.post(orderCreation + "?amount=" + amount);
+		return response.data.trim();
+	} catch (error) {
+		handleGenericError(error);
+	}
+}
+
+
+
+async function openCheckOut(amount) {
+	try {
+		const order_id = await CreateOrderId(amount);
+
+		return new Promise((resolve, reject) => {
+			let options = {
+				"key": config.apiKey,
+				"amount": amount * 100,
+				"currency": "INR",
+				"name": "Agrokart E-commerce",
+				"description": "Test Transaction",
+				"image": "https://freeimghost.net/images/2023/10/08/icon.png",
+				"order_id": order_id,
+				"handler": function(response) {
+					if (typeof response.razorpay_payment_id === 'undefined' || response.razorpay_payment_id < 1) {
+						reject('Payment failed: ' + response.error.description);
+					} else {
+
+						resolve(response.razorpay_payment_id);
+					}
+				}, "prefill": {
+					"name": `${user_profile.firstName} ${user_profile.lastName}`,
+					"email": `${user_profile.emailId}`,
+					"contact": `${user_profile.phoneNumber}`
+				},
+				"theme": {
+					"color": "#429b44"
+				}
+			};
+
+			let rzp1 = new Razorpay(options);
+
+			rzp1.on('payment.failed', function(response) {
+				reject('Payment failed: ' + response.error.description);
+			});
+
+			rzp1.open();
+		});
+	} catch (error) {
+		handleGenericError(error);
+	}
+}
+
+
+
+
+

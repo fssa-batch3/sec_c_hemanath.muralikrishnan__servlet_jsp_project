@@ -87,7 +87,8 @@
 			<li><i class="fa-solid fa-house"></i></li>
 			<li><a href="<%=request.getContextPath()%>/index.jsp">Home</a></li>
 			<li><i class="fa-solid fa-angle-right"></i></li>
-			<li>Shop</li>
+			<li><a
+				href="<%=request.getContextPath()%>/pages/product_list/list_product.jsp?cat=00">Shop</a></li>
 			<li><i class="fa-solid fa-angle-right"></i></li>
 			<li>Product</li>
 

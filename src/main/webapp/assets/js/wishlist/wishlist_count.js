@@ -1,27 +1,52 @@
+import { getBaseUrlFromCurrentPage } from "../getUrl.js";
+import { handleGenericError } from "../handelerrors.js";
+import { logged_email } from "../is_logged.js";
+import { startSpinner, endSpinner } from "../loading.js";
+
+
+getBaseUrlFromCurrentPage
+
 const wishlist_element = document.getElementById("wishlist-count");
 const mobile_wishlist_elemetn = document.getElementById(
-  "mobile-wishlist-count"
+	"mobile-wishlist-count"
 );
 
-function wishlist_count_fun() {
-  const wishlist_list = JSON.parse(localStorage.getItem("wishlist"));
+const fullUrl = getBaseUrlFromCurrentPage() + "/WishlistCRUD?action=getLength";
 
-  let wish_pro_count_se = 0;
+async function wishlist_count_fun() {
 
-  wishlist_element.innerText = "";
-  mobile_wishlist_elemetn.innerText = "";
+	wishlist_element.innerText = "";
 
-  if (wishlist_list != null) {
-    wishlist_list
-      .filter((obj) => user_id === obj.user_id)
-      .forEach(() => {
-        ++wish_pro_count_se;
-      });
-  }
+	mobile_wishlist_elemetn.innerText = "";
 
-  wishlist_element.innerText = wish_pro_count_se;
-  mobile_wishlist_elemetn.innerText = wish_pro_count_se;
+	if (logged_email) {
+
+		try {
+			startSpinner();
+			const response = await axios.post(fullUrl);
+			const count = response.data;
+			wishlist_element.innerText = count;
+			mobile_wishlist_elemetn.innerText = count;
+
+		} catch (error) {
+
+			handleGenericError(error);
+		}
+		finally {
+			endSpinner();
+		}
+
+
+	} else {
+
+		wishlist_element.innerText = "0";
+
+		mobile_wishlist_elemetn.innerText = "0";
+
+	}
 }
 
+
+await wishlist_count_fun();
 
 export { wishlist_count_fun };
