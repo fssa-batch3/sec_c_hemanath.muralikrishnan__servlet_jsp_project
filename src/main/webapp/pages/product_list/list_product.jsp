@@ -137,7 +137,7 @@
 					name="sort_by_in_cat" value="name_a_to_z"> <label
 					for="mobile_name_a_to_z">Name A to Z</label></li>
 				<li><input type="radio" id="mobile_name_z_to_a"
-					name="sort_by_in_cat" value="name_z_to_a"> <label
+					name="sort_by_in_cat" value="name_z_to_a desc"> <label
 					for="mobile_name_z_to_a">Name Z to A</label></li>
 				<li><input type="radio" id="mobile_cost_high_to_low"
 					name="sort_by_in_cat" value="cost_high_to_low"> <label
@@ -258,7 +258,10 @@
 
 		<!-- end of products container -->
 
+
 	</div>
+
+	<div class="pagination"></div>
 
 	<!-- footer start -->
 

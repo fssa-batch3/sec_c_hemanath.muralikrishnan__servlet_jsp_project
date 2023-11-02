@@ -129,7 +129,10 @@
 	</div>
 
 
-
+	<div class="pagination">
+		<span id="prevPage">Previous</span> <span id="pageNumber">1</span> <span
+			id="nextPage">Next</span>
+	</div>
 
 
 	<!-- logged check js -->

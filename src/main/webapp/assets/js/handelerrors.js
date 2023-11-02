@@ -43,7 +43,4 @@ function handleGenericError(error) {
 	}
 }
 
-
-
-
 export { handleGenericError };

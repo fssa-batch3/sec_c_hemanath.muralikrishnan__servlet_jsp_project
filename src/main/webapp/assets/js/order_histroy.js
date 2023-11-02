@@ -9,6 +9,7 @@ const orderServlet = getBaseUrlFromCurrentPage() + "/OrderCRUD";
 let user_profile;
 let product_details;
 let order_history;
+let count = 1;
 
 
 async function main() {
@@ -48,33 +49,57 @@ const show_status = document.querySelector(".payment_status");
 
 endSpinner();
 
+const itemsPerPage = 5;
+let currentPage = 1;
+
+const prevPageButton = document.getElementById("prevPage");
+const nextPageButton = document.getElementById("nextPage");
+const pageNumber = document.getElementById("pageNumber");
+
+prevPageButton.addEventListener("click", () => {
+	count = 1;
+	if (currentPage > 1) {
+		currentPage--;
+		show_histroy(order_history);
+	}
+});
+
+nextPageButton.addEventListener("click", () => {
+	const maxPage = Math.ceil(order_history.length / itemsPerPage);
+	if (currentPage < maxPage) {
+		currentPage++;
+		show_histroy(order_history);
+	}
+});
+
 
 function show_histroy(history) {
-
 	startSpinner();
+	const startIdx = (currentPage - 1) * itemsPerPage;
+	const endIdx = startIdx + itemsPerPage;
+	const displayedHistory = history.slice(startIdx, endIdx);
 
-	if (history.length != 0) {
-
-		append_history(history);
-
-
+	if (displayedHistory.length != 0) {
+		append_history(displayedHistory);
 	} else {
 		main_history.style.display = "none";
 		history_title.innerHTML = "No order items found";
 		history_title.style.marginBottom = "12em";
 	}
 
+	pageNumber.textContent = currentPage;
 	endSpinner();
 }
 
 
 function append_history(array = []) {
 
+	startSpinner();
+
 	append_history_td.innerHTML = "";
 
-	console.log(array);
 
-	let count = 1;
+
 
 	array.forEach(obj => {
 
@@ -136,6 +161,8 @@ function append_history(array = []) {
 		append_history_td.appendChild(tr);
 		count++;
 	});
+
+	endSpinner();
 
 }
 
@@ -260,6 +287,7 @@ async function cancelOrder(orderId, userId) {
 				Notify.success("Order successfully cancelled");
 				const orderResponse = await axios.post(orderServlet + "?action=readAll&id=" + user_profile.id);
 				order_history = orderResponse.data;
+				count = 1;
 				show_histroy(order_history);
 			} else {
 				handleGenericError(response.data.trim());

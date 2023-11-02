@@ -18,7 +18,6 @@ import org.json.JSONObject;
  */
 @WebServlet("/ReadProductById")
 public class ReadSingleProductServlet extends HttpServlet {
-	private static final long serialVersionUID = 3876902657245033806L;
 	ProductService service = new ProductService();
 
 	/**

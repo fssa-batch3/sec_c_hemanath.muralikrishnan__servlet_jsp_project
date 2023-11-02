@@ -341,6 +341,38 @@ table tbody .fa-xmark:hover {
 	text-align: left;
 }
 
+.pagination {
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.pagination span {
+
+	margin-right: 10px;
+	font-size: 1.2rem;
+	background-color: green;
+	color: white;
+	border-radius: 5px;
+	padding: 10px;
+	cursor: pointer;
+
+
+}
+
+.pagination #prevPage:hover,
+.pagination #nextPage:hover {
+	background-color: lightgreen;
+}
+
+.pagination #pageNumber {
+
+	background-color: lightcoral;
+	padding: 20px 20px;
+}
+
 /* Media query for responsive design */
 @media (max-width: 768px) {
 	.modal {

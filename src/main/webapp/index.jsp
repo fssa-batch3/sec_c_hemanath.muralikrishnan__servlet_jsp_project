@@ -14,7 +14,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <!--  header stylesheet -->
-<link rel="stylesheet"
+<link rel="stylesheet" 
 	href="<%=request.getContextPath()%>/assets/css/base_style/header.css"
 	type="text/css">
 <!-- header stylesheet -->

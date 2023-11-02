@@ -1,8 +1,12 @@
+/* The below code is importing various modules and functions from different JavaScript files. It is not
+clear what the specific functionality of each imported module or function is without further
+context. */
 import { findUserRecordByEmail, getCurrentUser, UserServlet } from "../is_logged.js";
 import { Notify } from "../vendor/notify.js";
 import { startSpinner, endSpinner } from "../loading.js";
 import { getBaseUrlFromCurrentPage } from "../getUrl.js";
 import { handleGenericError } from "../handelerrors.js";
+
 
 let logged_email;
 let user_profile;
@@ -11,6 +15,11 @@ const root = getBaseUrlFromCurrentPage();
 const addressServlet = root + "/UserAddress";
 // Wrap the code in an async function
 
+/**
+ * The main function is an asynchronous function that handles the logic for retrieving the current
+ * user, finding the user record by email, loading the user's address, appending profile details, and
+ * handling any errors that occur.
+ */
 async function main() {
 	try {
 		startSpinner();
@@ -80,6 +89,10 @@ const address_append_div = document.querySelector(".show-address");
 remove_address();
 
 
+/**
+ * The function `appendProfileDetails` is an asynchronous function that appends profile details to the
+ * DOM, including a user profile image, first name, last name, email, phone number, and gender.
+ */
 async function appendProfileDetails() {
 	try {
 		startSpinner(); // Start the spinner
@@ -135,6 +148,8 @@ async function appendProfileDetails() {
 profile_save_button.style.display = "none";
 
 // edit button
+/* The below code is adding an event listener to the "profile_edit_button" element. When the button is
+clicked, it prevents the default behavior (e.g., submitting a form). */
 profile_edit_button.addEventListener("click", (e) => {
 	e.preventDefault();
 
@@ -151,7 +166,10 @@ profile_edit_button.addEventListener("click", (e) => {
 });
 
 // save button
-// save button
+/* The above code is adding an event listener to a form with the id "profile_form". When the form is
+submitted, it prevents the default form submission behavior. It then retrieves the values from
+various form fields such as first name, last name, and gender. It constructs a URL with these values
+as query parameters and sends a POST request to the server using the axios library. */
 profile_form.addEventListener("submit", async (e) => {
 	e.preventDefault();
 	const id = user_profile.id;
@@ -202,6 +220,12 @@ profile_form.addEventListener("submit", async (e) => {
 
 
 // new address event listner
+/* The below code is adding an event listener to the "new_address" element. When the element is
+clicked, the code checks if the "profile_save_button" element is currently displayed. If it is not
+displayed, an error message is displayed using the Notify.error() function. If the
+"profile_save_button" element is displayed, the code sends a POST request to a specified URL with
+parameters "action" and "userId". The response from the request is then checked to see if the length
+of the data is less than 5. If it is less than 5, the "address_div" */
 new_address.addEventListener("click", async () => {
 	if (profile_save_button.style.display === "") {
 		Notify.error("Please complete the profile update to add new address");
@@ -230,6 +254,9 @@ new_address.addEventListener("click", async () => {
 });
 
 // close for new address
+/* The below code is adding an event listener to the "address_form_close" element. When the element is
+clicked, it will hide the "address_div" element and reset the form inside the "address_form"
+element. */
 address_form_close.addEventListener("click", () => {
 	address_div.style.display = "none";
 	address_form.reset();
@@ -237,6 +264,8 @@ address_form_close.addEventListener("click", () => {
 
 
 // new address event listner
+/* The above code is adding an event listener to the "submit" event of an HTML form with the id
+"address_form". When the form is submitted, the code prevents the default form submission behavior. */
 address_form.addEventListener("submit", (e) => {
 	e.preventDefault();
 
@@ -259,6 +288,17 @@ address_form.addEventListener("submit", (e) => {
 });
 
 // to save new address function
+/**
+ * The function `to_find_address` is an asynchronous function that fetches address data, searches for a
+ * matching address, and either updates an existing address or creates a new address based on the
+ * provided parameters.
+ * @param full_name_value - The value of the full name input field.
+ * @param full_address_value - The full address value is the complete address including street name,
+ * building number, city, state, and country.
+ * @param pincode_value - The value of the pincode entered by the user.
+ * @param phonenumber_value - The phone number value is the phone number of the address.
+ * @returns The function does not explicitly return a value.
+ */
 async function to_find_address(
 	full_name_value,
 	full_address_value,
@@ -314,6 +354,13 @@ async function to_find_address(
 	}
 }
 
+/**
+ * The function `create_address` sends a POST request to a server with an address parameter, displays
+ * success or error messages based on the server response, and handles any errors that occur during the
+ * process.
+ * @param address - The `address` parameter is an object that represents the address data to be sent to
+ * the server. It should have properties such as `street`, `city`, `state`, and `zipCode`.
+ */
 async function create_address(address) {
 	const fullUrl = `${addressServlet}?${address.toString()}`;
 	try {
@@ -333,6 +380,13 @@ async function create_address(address) {
 	}
 }
 
+/**
+ * The function `update_address` is an asynchronous function that sends a POST request to a server with
+ * an address parameter, displays success or error messages based on the server response, and handles
+ * any errors that occur during the process.
+ * @param address - The `address` parameter is the address object that contains the updated address
+ * information.
+ */
 async function update_address(address) {
 	const fullUrl = `${addressServlet}?${address.toString()}`;
 	try {
@@ -352,6 +406,10 @@ async function update_address(address) {
 	}
 }
 
+/**
+ * The function "close_address" hides the address div, clears the show-address element, loads the
+ * user's address, and resets the address form.
+ */
 function close_address() {
 
 	address_div.style.display = "none";
@@ -365,6 +423,12 @@ function close_address() {
 
 
 // creating element for each address element
+/**
+ * The function `load_address` is an asynchronous function that sends a POST request to a server to
+ * retrieve a user's addresses and displays them on the webpage.
+ * @param userId - The `userId` parameter is the unique identifier of the user for whom the addresses
+ * are being loaded. It is used to retrieve the addresses associated with that user from the server.
+ */
 async function load_address(userId) {
 
 	const params = new URLSearchParams({ action: "readAllAddress", userId });
@@ -391,6 +455,12 @@ async function load_address(userId) {
 
 // create elements and show the address
 
+/**
+ * The function `show_address` takes an array of addresses and dynamically creates HTML elements to
+ * display each address along with options to edit or delete them.
+ * @param [address_array] - An array of address objects. Each address object should have the following
+ * properties:
+ */
 function show_address(address_array = []) {
 	startSpinner();
 	address_array.forEach((item) => {
@@ -458,6 +528,15 @@ function show_address(address_array = []) {
 
 }
 
+/**
+ * The function checks if a given element is a descendant of another element.
+ * @param parent - The parent parameter is the DOM element that you want to check if it is a parent of
+ * the child element.
+ * @param child - The `child` parameter is the DOM element that you want to check if it is a descendant
+ * of the `parent` element.
+ * @returns The function isDescendant returns a boolean value. It returns true if the child element is
+ * a descendant of the parent element, and false otherwise.
+ */
 function isDescendant(parent, child) {
 	let node = child.parentNode;
 	while (node != null) {

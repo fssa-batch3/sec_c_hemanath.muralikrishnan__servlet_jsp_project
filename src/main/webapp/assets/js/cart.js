@@ -103,6 +103,8 @@ async function show_cart_products() {
 
 function cart_list(item, pro) {
 
+	startSpinner();
+
 	const cartProduct = JSON.parse(item);
 	const product = JSON.parse(pro);
 
@@ -245,6 +247,7 @@ function cart_list(item, pro) {
 
 	});
 
+	endSpinner();
 
 }
 

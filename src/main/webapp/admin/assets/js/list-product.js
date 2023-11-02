@@ -61,7 +61,7 @@ function list_products(array = []) {
 			table_tr.appendChild(td_seller_id);
 
 			const td_cat_name = document.createElement("td");
-			td_cat_name.innerHTML = `${item.category}`;
+			td_cat_name.innerHTML = `${item.category.replace(/_/g, ' ')}`;
 			table_tr.appendChild(td_cat_name);
 
 			const td_pro_img = document.createElement("td");
@@ -69,7 +69,7 @@ function list_products(array = []) {
 			table_tr.appendChild(td_pro_img);
 
 			const td_pro_name = document.createElement("td");
-			td_pro_name.innerHTML = `${item.name.englishName}`;
+			td_pro_name.innerHTML = `${item.name.englishName}<br>(${item.name.tamilName})`;
 			table_tr.appendChild(td_pro_name);
 
 			const td_avail_stock = document.createElement("td");

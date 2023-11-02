@@ -1,7 +1,6 @@
 package com.fssa.agrokart.admin;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -23,7 +22,7 @@ import com.fssa.agrokart.util.ExceptionLoggerUtil;
 @WebServlet("/ReadAllProductServlet")
 public class ReadAllProductServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 858279837616370892L;
+
 	ProductService service = new ProductService();
 
 	/**

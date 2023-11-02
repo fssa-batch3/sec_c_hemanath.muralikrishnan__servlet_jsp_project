@@ -1,3 +1,9 @@
+
+/* The below code is importing various modules and functions from different files. It is also declaring
+some variables and assigning values to them. The code is setting the URLs for two servlets,
+"ReadAllProductServlet" and "CartCRUDServlet", using the root location obtained from the current
+page URL. The code also declares variables "user_id" and "product_json" without assigning any values
+to them. */
 import { Notify } from "../vendor/notify.js";
 import { cart_count_fun } from "../cart_count.js";
 import { getBaseUrlFromCurrentPage } from "../getUrl.js";
@@ -10,10 +16,10 @@ const root_loc = getBaseUrlFromCurrentPage();
 const readAllServlet = root_loc + "/ReadAllProductServlet";
 const cartServlet = root_loc + "/CartCRUDServlet";
 
-
 let user_id;
 let product_json;
 
+/* The below code is written in JavaScript and it performs the following actions: */
 try {
 	startSpinner();
 	if (logged_email !== null) {
@@ -27,7 +33,8 @@ try {
 }
 
 
-// Initial data fetch
+
+/* The above code is written in JavaScript and it is performing the following tasks: */
 try {
 	startSpinner();
 	await fetchDataFromAPI();
@@ -37,7 +44,10 @@ try {
 	endSpinner();
 }
 
-// Function to fetch data from the API
+/**
+ * The function fetchDataFromAPI uses the axios library to make an asynchronous GET request to a
+ * servlet and retrieves data from the response.
+ */
 async function fetchDataFromAPI() {
 	try {
 		const response = await axios.get(readAllServlet);
@@ -47,10 +57,19 @@ async function fetchDataFromAPI() {
 	}
 }
 
+/* The above code is setting an interval to execute the function `fetchDataFromAPI` every 2 minutes (2
+* 60 * 1000 milliseconds). */
 const intervalMilliseconds = 2 * 60 * 1000; // 2 minutes
 setInterval(fetchDataFromAPI, intervalMilliseconds);
 
 
+/**
+ * The `list_products` function takes an array of products, creates HTML elements for each product, and
+ * appends them to a container element on the page.
+ * @param [array] - An array of products to be displayed. Each product object in the array should have
+ * the following properties:
+ * @returns The function does not explicitly return anything.
+ */
 function list_products(array = []) {
 
 	startSpinner();
@@ -239,6 +258,18 @@ function list_products(array = []) {
 	endSpinner();
 }
 
+/**
+ * The function updates the quantity of a product based on the selected option in a dropdown menu.
+ * @param id - The id parameter is the unique identifier of the product. It is used to find the
+ * <select> element with the specific data-product-id attribute.
+ * @param qty - The `qty` parameter represents the quantity of the product that needs to be updated.
+ * @param elem - The `elem` parameter is a reference to the HTML element that triggered the
+ * updatequantity function. It is used to perform specific actions on that element, such as updating
+ * its content or styling.
+ * @param index - The parameter "index" is used to specify the index of the element in an array or
+ * list. It is typically used when you want to perform an operation on a specific element at a
+ * particular index.
+ */
 function updatequantity(id, qty, elem, index) {
 	// Find the <select> element with the specific data-product-id
 	const productSelect = document.querySelector(`select[data-product-id="${id}"]`);
@@ -261,12 +292,30 @@ function updatequantity(id, qty, elem, index) {
 	}
 }
 
+/**
+ * The function "findObj" searches for an object in an array called "product_json" based on its id.
+ * @param id - The `id` parameter is the unique identifier of the object that we want to find in the
+ * `product_json` array.
+ * @returns an object from the `product_json` array that has a matching `id` property value.
+ */
 function findObj(id) {
 	return product_json.find((obj) => {
 		return obj.id == id;
 	});
 }
 
+/**
+ * The function `doOther` checks the availability of a product and performs different checks based on
+ * the unit of measurement.
+ * @param id - The id parameter is used to identify the product. It is passed to the findObj function
+ * to find the product object.
+ * @param qty - The quantity of the product being checked.
+ * @param elem - The `elem` parameter is a reference to the HTML element that triggered the function.
+ * It is used to manipulate the element or its properties within the function.
+ * @param index - The index parameter is used to specify the index of the element in an array or list.
+ * It is typically used to access or manipulate a specific element at that index.
+ * @param qty_id - The ID of the quantity object that needs to be checked.
+ */
 function doOther(id, qty, elem, index, qty_id) {
 
 	let findProduct = findObj(id);
@@ -296,7 +345,19 @@ function doOther(id, qty, elem, index, qty_id) {
 
 
 
-// check with kg
+
+/**
+ * The function "checkwithkg" checks if a required quantity of a product is available based on the
+ * available stock and weight of the product.
+ * @param product - The `product` parameter is a JSON string representing a product object. It contains
+ * information about the product, including its available stock and quantities.
+ * @param qty - The quantity of the product that needs to be checked.
+ * @param elem - `elem` is an array of DOM elements.
+ * @param index - The index parameter is used to specify the index of the element in the elem array
+ * that needs to be checked or modified.
+ * @param qty_id - The `qty_id` parameter is the ID of the quantity that needs to be checked against
+ * the available stock.
+ */
 function checkwithkg(product, qty, elem, index, qty_id) {
 	const par = JSON.parse(product);
 
@@ -324,6 +385,19 @@ function checkwithkg(product, qty, elem, index, qty_id) {
 }
 
 // check with gm
+/**
+ * The function checks if a required quantity of a product is available based on the available stock
+ * and weight of the product.
+ * @param product - The `product` parameter is a JSON string representing a product object. It contains
+ * information about the product, including its available stock and quantities.
+ * @param qty - The `qty` parameter represents the quantity of a product that needs to be checked
+ * against the available stock.
+ * @param elem - `elem` is an array of DOM elements.
+ * @param index - The index parameter is used to specify the index of the element in the elem array
+ * that needs to be checked or modified.
+ * @param qty_id - The `qty_id` parameter is the ID of the quantity that needs to be checked against
+ * the available stock.
+ */
 function checkwithgm(product, qty, elem, index, qty_id) {
 	const par = JSON.parse(product);
 
@@ -348,6 +422,18 @@ function checkwithgm(product, qty, elem, index, qty_id) {
 
 // check with base
 
+/**
+ * The function `checkwithbase` checks if a given quantity of a product is available in stock and
+ * updates the class of an element accordingly.
+ * @param product - The `product` parameter is a JSON string representing a product object. It contains
+ * information about the product, including its available stock and quantities.
+ * @param qty - The `qty` parameter represents the quantity of a product.
+ * @param elem - `elem` is an array of DOM elements.
+ * @param index - The `index` parameter is the index of the element in the `elem` array that needs to
+ * be checked or modified.
+ * @param qty_id - The `qty_id` parameter is the ID of the quantity that needs to be checked against
+ * the available stock.
+ */
 function checkwithbase(product, qty, elem, index, qty_id) {
 	const par = JSON.parse(product);
 
@@ -369,6 +455,12 @@ function checkwithbase(product, qty, elem, index, qty_id) {
 }
 
 
+/**
+ * The function "checkAdd" checks if the variable "user_id" is defined and returns true if it is,
+ * otherwise it returns false.
+ * @returns a boolean value. If the variable "user_id" is defined, it will return true. Otherwise, it
+ * will return false.
+ */
 function checkAdd() {
 
 	if (user_id != undefined) {
@@ -381,6 +473,17 @@ function checkAdd() {
 
 }
 
+/**
+ * The function `get_cart_ele` is an asynchronous function that adds a product to the cart based on the
+ * selected quantity and product options.
+ * @param id - The id parameter is the unique identifier of the product that you want to add to the
+ * cart.
+ * @param no_qty - The quantity of the product to be added to the cart.
+ * @returns nothing if the product is not found or if the user is not logged in. If the product is
+ * found and the user is logged in, the function either returns an error message if the item is already
+ * in the cart or if the quantity exceeds the available stock, or it adds the product to the cart and
+ * updates the cart count.
+ */
 async function get_cart_ele(id, no_qty) {
 
 	let productObj = findObj(id);
@@ -427,8 +530,8 @@ async function get_cart_ele(id, no_qty) {
 							cart_count_fun();
 						}
 
-					}else{
-						
+					} else {
+
 						Notify.error("Invalid quantity.");
 					}
 
@@ -450,6 +553,15 @@ async function get_cart_ele(id, no_qty) {
 }
 
 
+/**
+ * The function `add_product_to_cart` adds a product to the user's cart with the specified details.
+ * @param id - The id parameter represents the product id of the item being added to the cart.
+ * @param selectedQty - The selected quantity of the product to be added to the cart.
+ * @param no_qty - The parameter `no_qty` represents the quantity of the product that the user wants to
+ * add to the cart.
+ * @param seller - The `seller` parameter is the ID of the seller from whom the product is being
+ * purchased.
+ */
 async function add_product_to_cart(id, selectedQty, no_qty, seller) {
 
 
@@ -502,6 +614,15 @@ async function add_product_to_cart(id, selectedQty, no_qty, seller) {
 
 // check in the cart the selected the cart qty already added
 
+/**
+ * The function `check_qty` checks if a specific item with a given ID and quantity ID exists in the
+ * cart.
+ * @param id - The `id` parameter represents the product ID that you want to check in the cart items.
+ * @param qty_id - The `qty_id` parameter is the identifier for the quantity of a product in the cart.
+ * It is used to find a specific item in the cart based on its product ID and quantity ID.
+ * @returns the foundItem, which is an object from the cartItems array that matches the given id and
+ * qty_id.
+ */
 async function check_qty(id, qty_id) {
 	let cartItems;
 
@@ -514,8 +635,6 @@ async function check_qty(id, qty_id) {
 		endSpinner();
 	}
 
-
-
 	const foundItem = cartItems.find((obj) => {
 		return id === obj.product_id && qty_id === obj.qty_id;
 	});
@@ -523,6 +642,11 @@ async function check_qty(id, qty_id) {
 	return foundItem;
 }
 
+/**
+ * The function `get_all_cart_products` makes an asynchronous POST request to a servlet to retrieve all
+ * cart products and returns the response data.
+ * @returns the data received from the server in the response object.
+ */
 async function get_all_cart_products() {
 	try {
 		const response = await axios.post(cartServlet + "?action=readAll");
@@ -532,4 +656,6 @@ async function get_all_cart_products() {
 	}
 }
 
+/* The above code is exporting three functions: `list_products`, `get_cart_ele`, and `updatequantity`.
+These functions can be imported and used in other JavaScript files. */
 export { list_products, get_cart_ele, updatequantity };

@@ -58,6 +58,7 @@ function getFormInputValues() {
 	};
 }
 
+
 function submitForm() {
 
 	const formData = getFormInputValues();

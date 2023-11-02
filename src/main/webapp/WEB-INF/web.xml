@@ -4,7 +4,17 @@
 
 <web-app>
 
-	<display-name>Archetype Created Web Application</display-name>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>securedapp</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+
+	<display-name>Agrokart Ecommerce</display-name>
 	<servlet>
 		<servlet-name>ProductServlet</servlet-name>
 		<display-name>ProductServlet</display-name>

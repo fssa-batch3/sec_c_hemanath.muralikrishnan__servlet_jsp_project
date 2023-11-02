@@ -18,7 +18,6 @@ import com.fssa.agrokart.util.ExceptionLoggerUtil;
 @WebServlet("/DeleteAjaxProductServlet")
 public class DeleteProductServlet extends HttpServlet {
 
-	private static final long serialVersionUID = -1017463388207964840L;
 	ProductService service = new ProductService();
 
 	/**

@@ -24,7 +24,6 @@ import com.fssa.agrokart.util.ExceptionLoggerUtil;
 @WebServlet("/AddProductAjaxServlet")
 public class AddProductServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 2659016174246549673L;
 	ProductService service = new ProductService();
 
 	/**
@@ -36,6 +35,8 @@ public class AddProductServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		
 
 		try {
 			// Generate a Product object from the HTTP request data

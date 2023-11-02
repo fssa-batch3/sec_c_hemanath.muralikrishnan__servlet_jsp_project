@@ -1,3 +1,7 @@
+/* The below code is importing various functions and modules from different JavaScript files. It is
+also defining and exporting some functions. The code is related to managing a wishlist, listing
+products, updating quantity, displaying notifications, getting the base URL, handling errors, and
+managing loading spinners. It also includes functions related to user authentication and email. */
 import { wishlist_count_fun } from "../wishlist/wishlist_count.js";
 import { list_products, get_cart_ele, updatequantity } from "./appen_card.js";
 import { Notify } from "../vendor/notify.js";
@@ -7,6 +11,7 @@ import { endSpinner, startSpinner } from "../loading.js";
 import { logged_email, findUserRecordByEmail } from "../is_logged.js";
 
 
+/* The below code is declaring and initializing several constants and variables in JavaScript. */
 const readAllServlet = getBaseUrlFromCurrentPage() + "/ReadAllProductServlet";
 const readSingleProudct = getBaseUrlFromCurrentPage() + "/ReadProductById";
 const sellerServlet = getBaseUrlFromCurrentPage() + "/SellerCRUDServlet";
@@ -22,6 +27,7 @@ const product_id = Number(urlParams.get("id")); // return value of the "name" ke
 const product_cat = urlParams.get("cat");
 
 
+/* The below code is written in JavaScript and it is performing the following tasks: */
 try {
 
 	startSpinner();
@@ -41,6 +47,10 @@ try {
 }
 
 // start of left side
+/* The below code is declaring and initializing variables for various elements of a product display
+page in JavaScript. These variables represent different HTML elements such as divs, paragraphs,
+images, and buttons. The code is likely part of a larger JavaScript file that is responsible for
+manipulating and displaying product information on a website or application. */
 let indv_product_left_side_div;
 
 let indv_img_div;
@@ -106,6 +116,7 @@ let desc_cont_div;
 let desc_title_p;
 let desc_content_p;
 
+/* The below code is written in JavaScript and it is performing the following tasks: */
 try {
 
 	startSpinner();
@@ -127,6 +138,10 @@ try {
 	endSpinner();
 }
 
+/**
+ * The function `show_indv` creates and appends HTML elements to display individual product details.
+ * @param obj - The `obj` parameter is a JSON string representing an object.
+ */
 startSpinner();
 
 function show_indv(obj) {
@@ -481,6 +496,7 @@ function show_indv(obj) {
 
 endSpinner();
 
+/* The below code is written in JavaScript and it performs the following tasks: */
 startSpinner();
 
 const rel_products = product_details.filter((rel) => {
@@ -493,6 +509,12 @@ endSpinner();
 list_products(rel_products);
 
 
+/**
+ * The function `add_fav` is an asynchronous function that adds a product to the user's wishlist if
+ * they are logged in, otherwise it displays an error message.
+ * @param id - The `id` parameter represents the ID of the product that you want to add to the
+ * wishlist.
+ */
 async function add_fav(id) {
 
 	try {

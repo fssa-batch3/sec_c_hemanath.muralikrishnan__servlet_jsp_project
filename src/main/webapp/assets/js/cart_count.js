@@ -4,12 +4,38 @@ import { logged_email } from "./is_logged.js";
 import { startSpinner, endSpinner } from "./loading.js";
 
 
+/**
+ * Description placeholder
+ * @date 10/20/2023 - 1:09:41 PM
+ *
+ * @type {*}
+ */
 const cart_number = document.getElementById("cart-count");
 
+/**
+ * Description placeholder
+ * @date 10/20/2023 - 1:09:41 PM
+ *
+ * @type {*}
+ */
 const mobile_cart_number = document.getElementById("mobile-cart-count");
 
+/**
+ * Description placeholder
+ * @date 10/20/2023 - 1:09:41 PM
+ *
+ * @type {string}
+ */
 const fullUrl = getBaseUrlFromCurrentPage() + "/CartCRUDServlet?action=getLength";
 
+
+/**
+ * Description placeholder
+ * @date 10/20/2023 - 1:09:41 PM
+ *
+ * @async
+ * @returns {*}
+ */
 async function cart_count_fun() {
 
 	cart_number.innerText = "";

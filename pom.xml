@@ -74,8 +74,6 @@
 			<artifactId>razorpay-java</artifactId>
 			<version>1.4.4</version>
 		</dependency>
-
-
 	</dependencies>
 	<build>
 		<finalName>agrokart-web</finalName>

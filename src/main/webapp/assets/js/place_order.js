@@ -320,7 +320,6 @@ async function createOrder(amount, date, address, payment, payment_id, user_id) 
 
 	} catch (error) {
 
-		console.log(error);
 		handleGenericError(error);
 
 	} finally {
@@ -403,6 +402,7 @@ async function openCheckOut(amount) {
 				"order_id": order_id,
 				"handler": function(response) {
 					if (typeof response.razorpay_payment_id === 'undefined' || response.razorpay_payment_id < 1) {
+						
 						reject('Payment failed: ' + response.error.description);
 					} else {
 
@@ -430,8 +430,6 @@ async function openCheckOut(amount) {
 		handleGenericError(error);
 	}
 }
-
-
 
 
 

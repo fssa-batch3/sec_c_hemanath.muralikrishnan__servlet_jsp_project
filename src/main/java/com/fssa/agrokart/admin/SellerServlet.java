@@ -22,7 +22,6 @@ import com.fssa.agrokart.util.ExceptionLoggerUtil;
  */
 @WebServlet("/SellerCRUDServlet")
 public class SellerServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 	private static final int CUST0M_STATUS_CODE = 600;
 	SellerService sellerService = new SellerService();
 

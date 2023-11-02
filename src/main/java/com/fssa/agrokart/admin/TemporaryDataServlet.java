@@ -25,7 +25,6 @@ import com.fssa.agrokart.util.ExceptionLoggerUtil;
 @WebServlet("/TemporaryDataServlet")
 public class TemporaryDataServlet extends HttpServlet {
 	
-	private static final long serialVersionUID = 6546509407961075317L;
 
 	public TemporaryDataServlet() {
 	}

@@ -18,7 +18,6 @@ import com.fssa.agrokart.model.ProductCategory;
 import com.fssa.agrokart.model.ProductName;
 import com.fssa.agrokart.model.ProductNutrition;
 import com.fssa.agrokart.model.ProductQuantitiesCategory;
-import com.fssa.agrokart.model.ProductStatus;
 import com.fssa.agrokart.model.ProductStockUnits;
 import com.fssa.agrokart.service.ProductService;
 import com.fssa.agrokart.util.ExceptionLoggerUtil;
@@ -28,7 +27,6 @@ import com.fssa.agrokart.util.ExceptionLoggerUtil;
  */
 @WebServlet("/UpdateproductServlet")
 public class UpdateProductServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 	ProductService service = new ProductService();
 
 	/**
